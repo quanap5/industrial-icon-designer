@@ -1,0 +1,174 @@
+{
+  "icons": [
+    {
+      "functional_group": "file-edit",
+      "id": "save",
+      "meaning": "Save current project",
+      "notes": "synthetic fixture",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "ribbon",
+        "menu"
+      ]
+    },
+    {
+      "functional_group": "file-edit",
+      "id": "open-folder",
+      "meaning": "Open project folder",
+      "notes": "synthetic fixture",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ]
+    },
+    {
+      "functional_group": "users-settings",
+      "id": "settings",
+      "meaning": "Open application settings",
+      "notes": "synthetic fixture",
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "web-navigation"
+      ]
+    },
+    {
+      "functional_group": "file-edit",
+      "id": "add",
+      "meaning": "Add new item",
+      "notes": "synthetic fixture",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "device-list",
+        "web-actions"
+      ]
+    },
+    {
+      "functional_group": "alarms-events",
+      "id": "alarm-list",
+      "meaning": "Open active alarm list",
+      "notes": "synthetic fixture",
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "ribbon",
+        "web-navigation"
+      ]
+    },
+    {
+      "functional_group": "trends-reports",
+      "id": "trend-chart",
+      "meaning": "Open historical trend view",
+      "notes": "synthetic fixture",
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "ribbon",
+        "web-navigation"
+      ]
+    },
+    {
+      "functional_group": "devices-connectivity",
+      "id": "pump",
+      "meaning": "Pump equipment",
+      "notes": "synthetic fixture",
+      "semantic_role": "object",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "device-list"
+      ]
+    },
+    {
+      "functional_group": "devices-connectivity",
+      "id": "valve",
+      "meaning": "Valve equipment",
+      "notes": "synthetic fixture",
+      "semantic_role": "object",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "device-list"
+      ]
+    },
+    {
+      "functional_group": "devices-connectivity",
+      "id": "device-connect",
+      "meaning": "Connect to selected device",
+      "notes": "synthetic fixture",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "device-list"
+      ]
+    },
+    {
+      "functional_group": "devices-connectivity",
+      "id": "network",
+      "meaning": "Open network overview",
+      "notes": "synthetic fixture",
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "menu",
+        "web-navigation"
+      ]
+    }
+  ]
+}

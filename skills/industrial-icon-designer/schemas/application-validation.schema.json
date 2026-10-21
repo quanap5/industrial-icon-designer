@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "application-validation",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "profile": {
+      "type": "string"
+    },
+    "contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "context",
+          "platform",
+          "status",
+          "reason",
+          "environment",
+          "icon_ids",
+          "exported_hashes",
+          "evidence"
+        ],
+        "properties": {
+          "context": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "platform": {
+            "enum": [
+              "desktop",
+              "web"
+            ]
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "not-tested"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "environment": {
+            "type": "object"
+          },
+          "icon_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "exported_hashes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "scaling_percent": {
+            "type": "array",
+            "items": {
+              "enum": [
+                100,
+                125,
+                150,
+                200
+              ]
+            }
+          }
+        }
+      }
+    },
+    "overall": {
+      "enum": [
+        "ASSETS_READY",
+        "APPLICATION_VALIDATED",
+        "COMPLETE",
+        "NEEDS_REVIEW"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_id",
+    "contexts",
+    "overall"
+  ],
+  "additionalProperties": true
+}

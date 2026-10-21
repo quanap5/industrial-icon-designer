@@ -1,0 +1,130 @@
+{
+  "approvals": [
+    {
+      "asset_hashes": {
+        "add": "4e89373f6be825229c85c7863133493fb99c0cdf53ac0cf620cfb04d3a746beb",
+        "alarm-list": "e22e21e3852191109cf8c7dfffffe2d15d3a459ebcdbc5abc6db0bb253170bb4",
+        "device-connect": "291d92bd9fb520fc8311be56ff57390d6ec02b1946fc2dd3179d530380974e84",
+        "network": "e4de9dc6838cdabc78cedcab84cac485c8d28e46101bbcbfc89a007de806ea59",
+        "open-folder": "9619850b4d3acc4ba6ea606cffb2dd1edf351e3326c5025837db264c7a868bfd",
+        "pump": "771f40422ad5c72e075184767ce68660f9436c2389aab54ae9d48aac18b57aef",
+        "save": "233e34ce284b2de584b385b73f9a0fd1660da3a394ecb9fc3935570ef7b77523",
+        "settings": "5f8b73728cded09ecee8354275dba9255bd365833c9c3208b2016ee695e45908",
+        "trend-chart": "d578d62e5f644e7440260c8f4a6a9302f23bad8989e140365840ea9f8087e44e",
+        "valve": "7b69cee2a728ba8349be394e3e2d6074bb7a319e59e000661f5b5020e31362ca"
+      },
+      "note": "agent review of synthetic fixtures; not human approval",
+      "palette_hash": "605cd9f31c20f470143a7e15c2d16fc0e84c5fdf36e67c65597eccbe12931b87",
+      "reviewer_type": "agent",
+      "scope": [
+        "add",
+        "alarm-list",
+        "device-connect",
+        "network",
+        "open-folder",
+        "pump",
+        "save",
+        "settings",
+        "trend-chart",
+        "valve"
+      ],
+      "scores": {
+        "add": {
+          "balance": 4,
+          "clarity_16": 5,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 5,
+          "note": "plain plus; lightest of the set, acceptable",
+          "semantic_defect": false
+        },
+        "alarm-list": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 4,
+          "note": "bell only; the list aspect comes from the context, not the glyph",
+          "semantic_defect": false
+        },
+        "device-connect": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 5,
+          "note": "plug reads as connect; action, not a state",
+          "semantic_defect": false
+        },
+        "network": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 4,
+          "note": "three-node graph reads as network or hierarchy",
+          "semantic_defect": false
+        },
+        "open-folder": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 5,
+          "note": "folder shape reads clearly down to 16 px",
+          "semantic_defect": false
+        },
+        "pump": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 4,
+          "note": "impeller triangle is tiny at 16 px; the base and outlet carry the meaning",
+          "semantic_defect": false
+        },
+        "save": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 5,
+          "note": "classic floppy; inner details close up at 16 px but silhouette holds",
+          "semantic_defect": false
+        },
+        "settings": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 4,
+          "note": "uses the explicit 16 px variant without diagonal rays",
+          "semantic_defect": false
+        },
+        "trend-chart": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 5,
+          "note": "axes plus line; fine at all sizes",
+          "semantic_defect": false
+        },
+        "valve": {
+          "balance": 4,
+          "clarity_16": 4,
+          "consistency": 5,
+          "contrast": 5,
+          "meaning": 5,
+          "note": "opposed triangles with stem; tight at 16 px but recognizable",
+          "semantic_defect": false
+        }
+      },
+      "style_hash": "9d910a8bb62725b8cd8d5ebea81035fd00c7580a4b448d19958573dc15fa1ad5",
+      "timestamp": "2026-10-21T04:33:37+00:00",
+      "type": "pilot"
+    }
+  ],
+  "schema_version": "1.0",
+  "set_id": "scada-demo"
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="icon">
+    <rect id="badge" width="512" height="512" rx="96" fill="#1E293B"/>
+    <g id="tile-valve">
+      <rect x="56" y="56" width="188" height="188" rx="36" fill="#E2E8F0"/>
+      <path d="M84 132 L150 180 L84 228 Z M216 132 L150 180 L216 228 Z" fill="#334155"/>
+      <rect x="138" y="104" width="24" height="76" fill="#334155"/>
+      <rect x="106" y="84" width="88" height="26" rx="13" fill="#334155"/>
+    </g>
+    <g id="tile-gauge">
+      <rect x="268" y="56" width="188" height="188" rx="36" fill="#E2E8F0"/>
+      <circle cx="362" cy="150" r="66" fill="#334155"/>
+      <path d="M362 150 L396 110" fill="none" stroke="#E2E8F0" stroke-width="16" stroke-linecap="round"/>
+      <circle cx="362" cy="150" r="16" fill="#E2E8F0"/>
+    </g>
+    <g id="tile-elbow">
+      <rect x="56" y="268" width="188" height="188" rx="36" fill="#E2E8F0"/>
+      <path d="M100 316 H148 V364 H196 V412 H100 Z" fill="#334155"/>
+      <rect x="84" y="292" width="80" height="24" rx="8" fill="#334155"/>
+      <rect x="196" y="348" width="24" height="80" rx="8" fill="#334155"/>
+    </g>
+    <g id="tile-pump">
+      <rect x="268" y="268" width="188" height="188" rx="36" fill="#2563EB"/>
+      <rect x="350" y="298" width="52" height="44" fill="#FFFFFF"/>
+      <circle cx="352" cy="380" r="52" fill="#FFFFFF"/>
+      <circle cx="352" cy="380" r="20" fill="#2563EB"/>
+      <rect x="302" y="428" width="100" height="16" rx="8" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

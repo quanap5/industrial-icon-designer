@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="icon">
+    <g id="hex-nut">
+      <path fill="#1E293B" fill-rule="evenodd" d="M476 256 L366 446.53 L146 446.53 L36 256 L146 65.47 L366 65.47 Z M396 256 a140 140 0 1 0 -280 0 a140 140 0 1 0 280 0 Z"/>
+    </g>
+    <g id="bore">
+      <circle cx="256" cy="256" r="134" fill="#E2E8F0" stroke="#94A3B8" stroke-width="12"/>
+    </g>
+    <g id="vector-path">
+      <path d="M190 322 C190 230 322 282 322 190" fill="none" stroke="#334155" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="168" y="300" width="44" height="44" rx="6" fill="#1E293B"/>
+      <rect x="300" y="168" width="44" height="44" rx="6" fill="#1E293B"/>
+      <circle cx="256" cy="256" r="28" fill="#2563EB" stroke="#FFFFFF" stroke-width="8"/>
+    </g>
+  </g>
+</svg>

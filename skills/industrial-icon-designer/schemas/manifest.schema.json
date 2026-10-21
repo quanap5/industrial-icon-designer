@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "manifest",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "asset_set_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "style_version": {
+      "type": "string"
+    },
+    "toolchain": {
+      "type": "object",
+      "properties": {
+        "renderer": {
+          "type": "string"
+        },
+        "renderer_version": {
+          "type": "string"
+        }
+      }
+    },
+    "icons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "meaning",
+          "semantic_role",
+          "functional_group",
+          "usage_locations",
+          "sizes_px",
+          "source_path",
+          "source_sha256",
+          "master_path",
+          "master_sha256",
+          "route",
+          "status",
+          "style_version",
+          "variants",
+          "qa",
+          "exports"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "meaning": {
+            "type": "string"
+          },
+          "semantic_role": {
+            "enum": [
+              "action",
+              "state",
+              "object",
+              "navigation"
+            ]
+          },
+          "functional_group": {
+            "enum": [
+              "file-edit",
+              "navigation-layout",
+              "devices-connectivity",
+              "alarms-events",
+              "trends-reports",
+              "users-settings"
+            ]
+          },
+          "usage_locations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sizes_px": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 1024
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "source_path": {
+            "type": "string"
+          },
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "master_path": {
+            "type": "string"
+          },
+          "master_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "route": {
+            "enum": [
+              "redraw",
+              "normalize",
+              "reinterpret",
+              "native-svg"
+            ]
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "eligible",
+              "rejected"
+            ]
+          },
+          "style_version": {
+            "type": "string"
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "size_px"
+              ],
+              "properties": {
+                "size_px": {
+                  "type": "integer"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "fallback_to_master": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "qa": {
+            "type": "object",
+            "required": [
+              "structural",
+              "visual",
+              "reviewer_type"
+            ],
+            "properties": {
+              "structural": {
+                "enum": [
+                  "pending",
+                  "passed",
+                  "failed"
+                ]
+              },
+              "visual": {
+                "enum": [
+                  "pending",
+                  "approved",
+                  "rejected"
+                ]
+              },
+              "reviewer_type": {
+                "enum": [
+                  "user",
+                  "agent",
+                  "none"
+                ]
+              },
+              "reports": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "exports": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind",
+                "path",
+                "sha256",
+                "source_sha256",
+                "config_sha256"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "desktop-png",
+                    "web-inline",
+                    "web-img"
+                  ]
+                },
+                "theme": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "size_px": {
+                  "type": "integer"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "source_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "config_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_id",
+    "asset_set_version",
+    "style_version",
+    "icons"
+  ],
+  "additionalProperties": true
+}

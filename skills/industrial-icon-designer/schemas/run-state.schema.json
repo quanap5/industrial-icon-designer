@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "run-state",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "stage": {
+      "enum": [
+        "NEW",
+        "INVENTORIED",
+        "REFERENCES_ANALYZED",
+        "SPEC_READY",
+        "PILOT_READY",
+        "PILOT_APPROVED",
+        "GENERATING",
+        "SOURCE_QA_PASSED",
+        "EXPORTED",
+        "POST_EXPORT_QA_PASSED",
+        "ASSETS_READY",
+        "APPLICATION_VALIDATED",
+        "COMPLETE",
+        "BLOCKED",
+        "NEEDS_REVIEW",
+        "FAILED"
+      ]
+    },
+    "last_valid_stage": {
+      "enum": [
+        "NEW",
+        "INVENTORIED",
+        "REFERENCES_ANALYZED",
+        "SPEC_READY",
+        "PILOT_READY",
+        "PILOT_APPROVED",
+        "GENERATING",
+        "SOURCE_QA_PASSED",
+        "EXPORTED",
+        "POST_EXPORT_QA_PASSED",
+        "ASSETS_READY",
+        "APPLICATION_VALIDATED",
+        "COMPLETE",
+        "BLOCKED",
+        "NEEDS_REVIEW",
+        "FAILED"
+      ]
+    },
+    "dependency_hash": {
+      "type": "string"
+    },
+    "config_hash": {
+      "type": "string"
+    },
+    "pending_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    },
+    "completed_batches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "batch",
+          "group",
+          "ids"
+        ],
+        "properties": {
+          "batch": {
+            "type": "integer"
+          },
+          "group": {
+            "type": "string"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "message"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "recovery_action": {
+      "type": "string"
+    },
+    "resumable_phase": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_id",
+    "stage",
+    "last_valid_stage",
+    "pending_ids",
+    "completed_batches",
+    "errors"
+  ],
+  "additionalProperties": true
+}

@@ -1,0 +1,63 @@
+{
+  "checked_files": 170,
+  "icons": {
+    "add": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "alarm-list": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "device-connect": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "network": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "open-folder": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "pump": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "save": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "settings": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "trend-chart": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "valve": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    }
+  },
+  "phase": "exported",
+  "renderer": "0.48.1",
+  "summary": {
+    "checked": 10,
+    "failed": 0,
+    "passed": 10
+  },
+  "unknown_files": []
+}

@@ -1,0 +1,92 @@
+{
+  "add": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "plain plus; lightest of the set, acceptable"
+  },
+  "alarm-list": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "bell only; the list aspect comes from the context, not the glyph"
+  },
+  "device-connect": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "plug reads as connect; action, not a state"
+  },
+  "network": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "three-node graph reads as network or hierarchy"
+  },
+  "open-folder": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "folder shape reads clearly down to 16 px"
+  },
+  "pump": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "impeller triangle is tiny at 16 px; the base and outlet carry the meaning"
+  },
+  "save": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "classic floppy; inner details close up at 16 px but silhouette holds"
+  },
+  "settings": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "uses the explicit 16 px variant without diagonal rays"
+  },
+  "trend-chart": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "axes plus line; fine at all sizes"
+  },
+  "valve": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "opposed triangles with stem; tight at 16 px but recognizable"
+  }
+}

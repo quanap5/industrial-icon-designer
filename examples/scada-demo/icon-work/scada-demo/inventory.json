@@ -1,0 +1,314 @@
+{
+  "icons": [
+    {
+      "fixture": true,
+      "functional_group": "file-edit",
+      "id": "add",
+      "meaning": "Add new item",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/add.png",
+          "sha256": "c7c75be964934d9828bff99c1d4d1f5de5cc76815007283f79bb2847b4447d0e",
+          "width": 32
+        }
+      ],
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/add.png",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "toolbar",
+        "device-list",
+        "web-actions"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "alarms-events",
+      "id": "alarm-list",
+      "meaning": "Open active alarm list",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/alarm-list.png",
+          "sha256": "a5570edaab9a691551e7dc5efc2389d51acc9c9e923d6281d25312f8178c83ce",
+          "width": 32
+        }
+      ],
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/alarm-list.png",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "ribbon",
+        "web-navigation"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "devices-connectivity",
+      "id": "device-connect",
+      "meaning": "Connect to selected device",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/device-connect.png",
+          "sha256": "4909f91c5d7756da1b9df1c2c4a568d7412fe61bd7a3256fb1a077c72a54c004",
+          "width": 32
+        }
+      ],
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/device-connect.png",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "toolbar",
+        "device-list"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "devices-connectivity",
+      "id": "network",
+      "meaning": "Open network overview",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/network.png",
+          "sha256": "419823e0e4dc6ab0b1de0c9427fb82cc08ae2220688b38e3f19162e56b64f5c2",
+          "width": 32
+        }
+      ],
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/network.png",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "menu",
+        "web-navigation"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "file-edit",
+      "id": "open-folder",
+      "meaning": "Open project folder",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "height": 32,
+          "kind": "svg",
+          "path": "../../references/open-folder.svg",
+          "sha256": "e16313f5bfb6cf9820cc1d557d8f0421302b910fed48230939ac6e429fc35e0c",
+          "width": 32
+        }
+      ],
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/open-folder.svg",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "devices-connectivity",
+      "id": "pump",
+      "meaning": "Pump equipment",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/pump.png",
+          "sha256": "56438ccfbefbbd02613f340a96a4c0a37d312618865c8088ac76fdd0db0ee03e",
+          "width": 32
+        }
+      ],
+      "semantic_role": "object",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/pump.png",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "device-list"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "file-edit",
+      "id": "save",
+      "meaning": "Save current project",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "height": 32,
+          "kind": "svg",
+          "path": "../../references/save.svg",
+          "sha256": "c1707ffaa8b2dfccae8787edc8c14580954d9b8e514284dc4d099dd6cf8e3995",
+          "width": 32
+        }
+      ],
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/save.svg",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "toolbar",
+        "ribbon",
+        "menu"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "users-settings",
+      "id": "settings",
+      "meaning": "Open application settings",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "height": 32,
+          "kind": "svg",
+          "path": "../../references/settings.svg",
+          "sha256": "0012fd1d6d7e9d165da221ceea386537717f6e2ba51499d3172a0e2abb041458",
+          "width": 32
+        }
+      ],
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/settings.svg",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "toolbar",
+        "web-navigation"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "trends-reports",
+      "id": "trend-chart",
+      "meaning": "Open historical trend view",
+      "notes": "synthetic fixture",
+      "references": [
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/trend-chart.png",
+          "sha256": "eb92b673f679f5cea52f06b30f115217124a4c5b094d8f716198281bc33a687c",
+          "width": 32
+        }
+      ],
+      "semantic_role": "navigation",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/trend-chart.png",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "ribbon",
+        "web-navigation"
+      ]
+    },
+    {
+      "fixture": true,
+      "functional_group": "devices-connectivity",
+      "id": "valve",
+      "meaning": "Valve equipment",
+      "notes": "synthetic fixture; PNG and SVG references both present; SVG used for geometry, PNG retained",
+      "references": [
+        {
+          "height": 32,
+          "kind": "svg",
+          "path": "../../references/valve.svg",
+          "sha256": "a20a61a2c4fefe63bbe15bc3cd86fbfa642a6b32274472b59c67780e3806bff9",
+          "width": 32
+        },
+        {
+          "has_alpha": true,
+          "height": 32,
+          "kind": "png",
+          "path": "../../references/valve.png",
+          "sha256": "e434309f4f1e5d13b2fd1344f287bf79fd7a907f8fae593bb7e5f7e6a2d02d4e",
+          "width": 32
+        }
+      ],
+      "semantic_role": "object",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "source_path": "../../references/valve.svg",
+      "status": "INVENTORIED",
+      "usage_locations": [
+        "device-list"
+      ]
+    }
+  ],
+  "ignored_files": 0,
+  "rejected": [],
+  "schema_version": "1.0",
+  "set_id": "scada-demo",
+  "unmatched_metadata": [],
+  "unresolved": []
+}

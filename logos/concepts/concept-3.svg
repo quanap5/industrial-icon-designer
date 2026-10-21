@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="icon">
+    <g id="gear">
+      <circle cx="256" cy="256" r="156" fill="#1E293B"/>
+      <g fill="#1E293B">
+        <rect x="222" y="40" width="68" height="80" rx="10"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(45 256 256)"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(90 256 256)"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(135 256 256)"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(180 256 256)"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(225 256 256)"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(270 256 256)"/>
+        <rect x="222" y="40" width="68" height="80" rx="10" transform="rotate(315 256 256)"/>
+      </g>
+    </g>
+    <g id="center-cutout">
+      <circle cx="256" cy="256" r="104" fill="#E2E8F0"/>
+    </g>
+    <g id="pen-nib" transform="rotate(45 256 256)">
+      <path d="M256 160 L306 262 L282 348 L230 348 L206 262 Z" fill="#2563EB" stroke="#2563EB" stroke-width="8" stroke-linejoin="round"/>
+      <path d="M256 214 V262" stroke="#E2E8F0" stroke-width="10" stroke-linecap="round" fill="none"/>
+      <circle cx="256" cy="272" r="16" fill="#E2E8F0"/>
+    </g>
+  </g>
+</svg>

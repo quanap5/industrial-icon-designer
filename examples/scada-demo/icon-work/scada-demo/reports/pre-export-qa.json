@@ -1,0 +1,97 @@
+{
+  "blocked": null,
+  "contrast": {
+    "passes": true,
+    "scope": "token-level only; not a substitute for visual review or an accessibility audit",
+    "themes": {
+      "dark": {
+        "background": "#1E293B",
+        "disabled": {
+          "color": "#64748B",
+          "ratio": 3.07,
+          "reported_only": true
+        },
+        "normal": {
+          "color": "#E2E8F0",
+          "passes": true,
+          "ratio": 11.87,
+          "required": 3.0
+        }
+      },
+      "light": {
+        "background": "#FFFFFF",
+        "disabled": {
+          "color": "#94A3B8",
+          "ratio": 2.56,
+          "reported_only": true
+        },
+        "normal": {
+          "color": "#334155",
+          "passes": true,
+          "ratio": 10.35,
+          "required": 3.0
+        }
+      }
+    }
+  },
+  "grid": 24,
+  "icons": {
+    "add": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "alarm-list": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "device-connect": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "network": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "open-folder": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "pump": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "save": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "settings": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "trend-chart": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    },
+    "valve": {
+      "errors": [],
+      "status": "passed",
+      "warnings": []
+    }
+  },
+  "phase": "source",
+  "style_version": "1.0.0",
+  "summary": {
+    "checked": 10,
+    "failed": 0,
+    "passed": 10
+  }
+}

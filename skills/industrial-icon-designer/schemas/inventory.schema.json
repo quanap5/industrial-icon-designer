@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "inventory",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "icons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "meaning",
+          "source_path",
+          "usage_locations",
+          "sizes_px",
+          "functional_group",
+          "semantic_role",
+          "status",
+          "references"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_path": {
+            "type": "string"
+          },
+          "usage_locations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "sizes_px": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 1024
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "functional_group": {
+            "enum": [
+              "file-edit",
+              "navigation-layout",
+              "devices-connectivity",
+              "alarms-events",
+              "trends-reports",
+              "users-settings"
+            ]
+          },
+          "semantic_role": {
+            "enum": [
+              "action",
+              "state",
+              "object",
+              "navigation"
+            ]
+          },
+          "status": {
+            "enum": [
+              "INVENTORIED",
+              "NEEDS_REVIEW"
+            ]
+          },
+          "inferred": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "confidence",
+                "note"
+              ],
+              "properties": {
+                "confidence": {
+                  "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "path",
+                "sha256",
+                "kind"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "kind": {
+                  "enum": [
+                    "png",
+                    "svg"
+                  ]
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "has_alpha": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "minItems": 1
+          },
+          "notes": {
+            "type": "string"
+          },
+          "fixture": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "rejected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "reason"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_id",
+    "icons",
+    "rejected",
+    "unresolved"
+  ],
+  "additionalProperties": true
+}

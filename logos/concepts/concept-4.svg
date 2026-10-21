@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="icon">
+    <g id="badge">
+      <rect x="0" y="0" width="512" height="512" rx="96" fill="#1E293B"/>
+    </g>
+    <g id="grid-corner-marks">
+      <rect x="40" y="40" width="28" height="28" rx="6" fill="#2563EB"/>
+      <rect x="444" y="40" width="28" height="28" rx="6" fill="#334155"/>
+      <rect x="40" y="444" width="28" height="28" rx="6" fill="#334155"/>
+      <rect x="444" y="444" width="28" height="28" rx="6" fill="#334155"/>
+    </g>
+    <g id="pipe-body">
+      <rect x="204" y="112" width="104" height="288" fill="#E2E8F0"/>
+      <rect x="204" y="112" width="28" height="288" fill="#94A3B8"/>
+      <rect x="244" y="112" width="20" height="288" fill="#60A5FA"/>
+    </g>
+    <g id="flanges">
+      <rect x="116" y="92" width="280" height="64" rx="16" fill="#FFFFFF"/>
+      <rect x="116" y="356" width="280" height="64" rx="16" fill="#FFFFFF"/>
+      <rect x="116" y="140" width="280" height="16" fill="#94A3B8"/>
+      <rect x="116" y="356" width="280" height="16" fill="#94A3B8"/>
+    </g>
+    <g id="bolts">
+      <circle cx="154" cy="116" r="14" fill="#334155"/>
+      <circle cx="358" cy="116" r="14" fill="#334155"/>
+      <circle cx="154" cy="396" r="14" fill="#334155"/>
+      <circle cx="358" cy="396" r="14" fill="#334155"/>
+    </g>
+  </g>
+</svg>

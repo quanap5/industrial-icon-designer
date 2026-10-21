@@ -1,0 +1,48 @@
+{
+  "redesign_mode": "redraw",
+  "required_contexts": [
+    {
+      "id": "desktop-toolbar",
+      "platform": "desktop"
+    },
+    {
+      "id": "desktop-ribbon",
+      "platform": "desktop"
+    },
+    {
+      "id": "desktop-menu",
+      "platform": "desktop"
+    },
+    {
+      "id": "desktop-device-list",
+      "platform": "desktop"
+    },
+    {
+      "id": "web-navigation",
+      "platform": "web"
+    },
+    {
+      "id": "web-actions",
+      "platform": "web"
+    },
+    {
+      "id": "web-list",
+      "platform": "web"
+    }
+  ],
+  "sample_ids": [
+    "add",
+    "alarm-list",
+    "device-connect",
+    "network",
+    "open-folder",
+    "pump",
+    "save",
+    "settings",
+    "trend-chart",
+    "valve"
+  ],
+  "schema_version": "1.0",
+  "semantic_approval": false,
+  "set_id": "scada-demo"
+}

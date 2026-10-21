@@ -1,0 +1,11 @@
+id,meaning,usage_locations,sizes_px,functional_group,semantic_role,notes
+save,Save current project,toolbar;ribbon;menu,16;20;24;32,file-edit,action,synthetic fixture
+open-folder,Open project folder,toolbar;menu,16;20;24;32,file-edit,action,synthetic fixture
+settings,Open application settings,toolbar;web-navigation,16;20;24;32,users-settings,navigation,synthetic fixture
+add,Add new item,toolbar;device-list;web-actions,16;20;24;32,file-edit,action,synthetic fixture
+alarm-list,Open active alarm list,ribbon;web-navigation,16;20;24;32,alarms-events,navigation,synthetic fixture
+trend-chart,Open historical trend view,ribbon;web-navigation,16;20;24;32,trends-reports,navigation,synthetic fixture
+pump,Pump equipment,device-list,16;20;24;32,devices-connectivity,object,synthetic fixture
+valve,Valve equipment,device-list,16;20;24;32,devices-connectivity,object,synthetic fixture
+device-connect,Connect to selected device,toolbar;device-list,16;20;24;32,devices-connectivity,action,synthetic fixture
+network,Open network overview,menu;web-navigation,16;20;24;32,devices-connectivity,navigation,synthetic fixture

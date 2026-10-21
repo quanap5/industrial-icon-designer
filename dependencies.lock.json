@@ -1,0 +1,46 @@
+{
+  "install_dir": ".claude/skills",
+  "renderer": {
+    "name": "resvg",
+    "version": "0.48.1"
+  },
+  "schema_version": "1.0",
+  "upstream": {
+    "commit": "5316082202ab6a7e0779b16b5c58b846c006a460",
+    "install_method": "verified git clone copied by setup_upstream.py",
+    "license": "MIT",
+    "license_sha256": "6ce0c2dc1b054d7f63b7613da7816424be95555f71a09aa4639e8519e612d717",
+    "repository": "https://github.com/shadcn-labs/skills",
+    "skills": {
+      "icon-set-audit": {
+        "files": {
+          "SKILL.md": "a15ce749d180472d55f2ecf3450f259a83bdccd8e9489b51fd6b5b51783cf20e",
+          "references/failure-modes.md": "0aa5e9f0e0d585495cf5cdd826e569c895257580ee2f7dcdfc4d6e5018713bc6",
+          "scripts/audit_icons.py": "b7a6bd75ed20353f8c210ce12dc37c5f0f31ecfe59660e9f3578e5713f0f63fd"
+        },
+        "path": "skills/icon-set-audit"
+      },
+      "icon-set-extend": {
+        "files": {
+          "SKILL.md": "f72107d84dc686b9195756d3ab135e8a2c1522e62110d924ddc7235763b55124",
+          "references/matching.md": "600ba2e5abe1cb1e0db9de97ca942052734a94e6c02e818eb0181d1f9e462e4a",
+          "scripts/infer_spec.py": "da9a84a87c12fd0f84a63fccabf7546699a18ccfd69f99e93e46daa604424e26",
+          "scripts/validate_icons.py": "56144b574dc723a4cba44766bdc2ba1e483dbf7fff484e579302d72650939d5b"
+        },
+        "path": "skills/icon-set-extend"
+      },
+      "icon-set-generator": {
+        "files": {
+          "SKILL.md": "ed983ede9cace2e13b9caa347035b875fbcd0c6ba7562611726f0987eb89e3d8",
+          "references/construction.md": "066dcd1fa9f5bc82a1a5e22fb95746457a15ef647a50b8ae2727df662850a6a0",
+          "references/icon-inventory.md": "1a728d16a1a211f77d2a70594ddf04ab3f6ed52200e4f4fd17dc5d400c9fd435",
+          "references/style-presets.md": "bc7b473296edd1e490ce9c62f3a7fc5cecc3e6827a7185bc07d214bdfb7d6e45",
+          "references/svg-patterns.md": "843bf68632dc2358804720333e6dcd1c93bd4a99ff266a8e8e03be8b7534cd32",
+          "scripts/build_preview.py": "4d6b9ddf9a6de8f8da88f8dd6d3a6f47a0e410b610765d4c79522c20decd8c58",
+          "scripts/validate_icons.py": "56144b574dc723a4cba44766bdc2ba1e483dbf7fff484e579302d72650939d5b"
+        },
+        "path": "skills/icon-set-generator"
+      }
+    }
+  }
+}

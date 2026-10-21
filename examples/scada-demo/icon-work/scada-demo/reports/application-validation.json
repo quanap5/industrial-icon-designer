@@ -1,0 +1,78 @@
+{
+  "contexts": [
+    {
+      "context": "desktop-toolbar",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "desktop",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    },
+    {
+      "context": "desktop-ribbon",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "desktop",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    },
+    {
+      "context": "desktop-menu",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "desktop",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    },
+    {
+      "context": "desktop-device-list",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "desktop",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    },
+    {
+      "context": "web-navigation",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "web",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    },
+    {
+      "context": "web-actions",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "web",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    },
+    {
+      "context": "web-list",
+      "environment": {},
+      "evidence": "",
+      "exported_hashes": {},
+      "icon_ids": [],
+      "platform": "web",
+      "reason": "no actual application context has been tested yet",
+      "status": "not-tested"
+    }
+  ],
+  "overall": "ASSETS_READY",
+  "profile": "default",
+  "schema_version": "1.0",
+  "set_id": "scada-demo"
+}

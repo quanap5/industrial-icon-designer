@@ -1,0 +1,170 @@
+{
+  "audit": {
+    "complexity": {
+      "heavy": [],
+      "median_elements": 2
+    },
+    "coordinates": {
+      "histogram": {
+        "0": 3,
+        "1": 1
+      },
+      "offenders": {}
+    },
+    "duplicates": [],
+    "findings": {
+      "open-folder": [
+        {
+          "kind": "spec",
+          "message": "root stroke-width is 2.5; the set converges on 2.0",
+          "severity": "blocking"
+        },
+        {
+          "kind": "colour",
+          "message": "root stroke='#555555'. The icon cannot inherit colour",
+          "severity": "blocking"
+        }
+      ],
+      "save": [
+        {
+          "kind": "spec",
+          "message": "root stroke-width is 1.0; the set converges on 2.0",
+          "severity": "blocking"
+        },
+        {
+          "kind": "spec",
+          "message": "root stroke-linecap is 'round'; the set converges on 'butt'",
+          "severity": "blocking"
+        },
+        {
+          "kind": "colour",
+          "message": "root stroke='#1f77b4'. The icon cannot inherit colour",
+          "severity": "blocking"
+        }
+      ],
+      "settings": [
+        {
+          "kind": "spec",
+          "message": "root stroke-linecap is 'round'; the set converges on 'butt'",
+          "severity": "blocking"
+        },
+        {
+          "kind": "colour",
+          "message": "root stroke='#ff7f0e'. The icon cannot inherit colour",
+          "severity": "blocking"
+        }
+      ],
+      "valve": [
+        {
+          "kind": "colour",
+          "message": "root stroke='#ff7f0e'. The icon cannot inherit colour",
+          "severity": "blocking"
+        }
+      ]
+    },
+    "grid": 32.0,
+    "minGap": 6.0,
+    "naming": {
+      "malformed": [],
+      "semantic_names": [
+        "save",
+        "settings"
+      ],
+      "singular_plural": {}
+    },
+    "optical": [
+      {
+        "envelope": "horizontal",
+        "fill": 0.713,
+        "h": 13.0,
+        "icon": "open-folder",
+        "w": 19.0
+      },
+      {
+        "envelope": "vertical",
+        "fill": 0.675,
+        "h": 18.0,
+        "icon": "save",
+        "w": 14.0
+      },
+      {
+        "envelope": "circle",
+        "fill": 0.675,
+        "h": 18.0,
+        "icon": "settings",
+        "w": 18.0
+      },
+      {
+        "envelope": "horizontal",
+        "fill": 0.675,
+        "h": 12.0,
+        "icon": "valve",
+        "w": 18.0
+      }
+    ],
+    "padding": 2.67,
+    "part_clusters": [],
+    "spec": {
+      "stroke-linecap": "butt",
+      "stroke-linejoin": "miter",
+      "stroke-width": "2.0",
+      "viewBox": "0 0 32 32"
+    },
+    "summary": {
+      "clean": 0,
+      "counts": {
+        "blocking": 8
+      },
+      "icons": 4,
+      "unparseable": 0
+    },
+    "unparseable": [],
+    "variants": {
+      "stroke-linecap": [
+        {
+          "count": 2,
+          "icons": [
+            "open-folder",
+            "valve"
+          ],
+          "value": "butt"
+        },
+        {
+          "count": 2,
+          "icons": [
+            "save",
+            "settings"
+          ],
+          "value": "round"
+        }
+      ],
+      "stroke-width": [
+        {
+          "count": 2,
+          "icons": [
+            "settings",
+            "valve"
+          ],
+          "value": "2.0"
+        },
+        {
+          "count": 1,
+          "icons": [
+            "open-folder"
+          ],
+          "value": "2.5"
+        },
+        {
+          "count": 1,
+          "icons": [
+            "save"
+          ],
+          "value": "1.0"
+        }
+      ]
+    }
+  },
+  "commit": "5316082202ab6a7e0779b16b5c58b846c006a460",
+  "route": "native-svg",
+  "tool": "icon-set-audit"
+}

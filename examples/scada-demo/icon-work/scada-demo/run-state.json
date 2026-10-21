@@ -1,0 +1,21 @@
+{
+  "completed_batches": [],
+  "config_hash": "37d691ac52002e387018d7b6b015bcf1e1867d2d7eaff74793314303027e3fdf",
+  "errors": [],
+  "last_valid_stage": "ASSETS_READY",
+  "pending_ids": [
+    "add",
+    "alarm-list",
+    "device-connect",
+    "network",
+    "open-folder",
+    "pump",
+    "save",
+    "settings",
+    "trend-chart",
+    "valve"
+  ],
+  "schema_version": "1.0",
+  "set_id": "scada-demo",
+  "stage": "ASSETS_READY"
+}

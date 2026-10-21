@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "approvals",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "reviewer_type",
+          "timestamp",
+          "scope",
+          "style_hash",
+          "asset_hashes"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "pilot",
+              "batch",
+              "palette",
+              "style-change"
+            ]
+          },
+          "reviewer_type": {
+            "enum": [
+              "user",
+              "agent"
+            ]
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "style_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "asset_hashes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_id",
+    "approvals"
+  ],
+  "additionalProperties": true
+}

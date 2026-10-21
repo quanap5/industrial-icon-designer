@@ -1,0 +1,42 @@
+{
+  "default_export_sizes_px": [
+    16,
+    20,
+    24,
+    32
+  ],
+  "grid": 24,
+  "linecap": "round",
+  "linejoin": "round",
+  "padding": 2,
+  "palette_status": "provisional_requires_review",
+  "preview_sizes_px": [
+    16,
+    20,
+    24,
+    32
+  ],
+  "schema_version": "1.0",
+  "set_id": "scada-demo",
+  "small_variant_sizes_px": [
+    16
+  ],
+  "states": [
+    "normal",
+    "disabled"
+  ],
+  "stroke_width": 1.5,
+  "style_version": "1.0.0",
+  "themes": {
+    "dark": {
+      "background": "#1E293B",
+      "disabled": "#64748B",
+      "normal": "#E2E8F0"
+    },
+    "light": {
+      "background": "#FFFFFF",
+      "disabled": "#94A3B8",
+      "normal": "#334155"
+    }
+  }
+}

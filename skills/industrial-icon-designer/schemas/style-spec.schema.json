@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "style-spec",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "style_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "grid": {
+      "type": "integer",
+      "minimum": 8
+    },
+    "stroke_width": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "linecap": {
+      "enum": [
+        "round",
+        "butt",
+        "square"
+      ]
+    },
+    "linejoin": {
+      "enum": [
+        "round",
+        "miter",
+        "bevel"
+      ]
+    },
+    "padding": {
+      "type": "number",
+      "minimum": 0
+    },
+    "preview_sizes_px": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 8,
+        "maximum": 1024
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "default_export_sizes_px": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 8,
+        "maximum": 1024
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "themes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "background",
+          "normal",
+          "disabled"
+        ],
+        "properties": {
+          "background": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "normal": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "disabled": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          }
+        }
+      }
+    },
+    "states": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "normal",
+          "disabled"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "small_variant_sizes_px": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "palette_status": {
+      "enum": [
+        "provisional_requires_review",
+        "approved"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_id",
+    "style_version",
+    "grid",
+    "stroke_width",
+    "linecap",
+    "linejoin",
+    "padding",
+    "preview_sizes_px",
+    "default_export_sizes_px",
+    "themes",
+    "states",
+    "small_variant_sizes_px",
+    "palette_status"
+  ],
+  "additionalProperties": true
+}

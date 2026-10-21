@@ -1,0 +1,15 @@
+# local environments and caches
+env-py311/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# upstream skills are installed from the verified lock by setup_upstream.py
+.claude/skills/icon-set-audit/
+.claude/skills/icon-set-extend/
+.claude/skills/icon-set-generator/
+
+# working sets belong to the user; the synthetic example is the exception
+icon-work/
+!examples/scada-demo/icon-work/
