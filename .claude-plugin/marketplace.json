@@ -1,0 +1,16 @@
+{
+  "name": "quanap5-plugins",
+  "description": "Claude Code plugins by quanap5",
+  "owner": {
+    "name": "quanap5"
+  },
+  "plugins": [
+    {
+      "name": "industrial-icon-designer",
+      "source": ".",
+      "description": "Redesign industrial and SCADA UI icon sets into one consistent system and export Desktop PNG and Web SVG assets.",
+      "category": "design",
+      "tags": ["icons", "svg", "scada", "design-system"]
+    }
+  ]
+}

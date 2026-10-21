@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -14,10 +16,19 @@ FIXTURES = ROOT / "tests" / "fixtures"
 sys.path.insert(0, str(SCRIPTS))
 
 
+_EMPTY_HOME = tempfile.mkdtemp(prefix="icon-designer-home-")
+
+
+def isolated_env(env: dict | None = None) -> dict:
+    """The environment for a script run, with an empty HOME so a skill installed under the real ~/.claude/skills
+    (for example a global copy) can never change what a test finds or misses."""
+    return {**(os.environ if env is None else env), "HOME": _EMPTY_HOME}
+
+
 def run_script(name: str, *args, cwd: Path | None = None, input: str | None = None, env: dict | None = None):
     """Run a package script with the test interpreter; arguments are never shell-interpolated."""
-    return subprocess.run([sys.executable, str(SCRIPTS / name), *map(str, args)], cwd=cwd, input=input, env=env,
-                          capture_output=True, text=True, check=False)
+    return subprocess.run([sys.executable, str(SCRIPTS / name), *map(str, args)], cwd=cwd, input=input,
+                          env=isolated_env(env), capture_output=True, text=True, check=False)
 
 
 def run_json(name: str, *args, cwd: Path | None = None):

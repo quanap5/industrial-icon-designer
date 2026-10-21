@@ -27,6 +27,10 @@ Evidence: 183 tests pass (`pytest`, 11 min 50 s); every AT-01 to AT-26 has a `te
 | README covers setup, usage, troubleshooting, uninstall, limitations | `README.md` |
 | Application validation reports honest statuses incl. no access | AT-22 to AT-24 and `reports/application-validation.json` (all `not-tested`) |
 
+## Distribution
+
+The repository is a Claude Code plugin and marketplace (`quanap5-plugins`, version 0.2.0). `claude plugin validate .` passes. A private-repository install needs read access plus one working git credential (SSH, or `gh auth setup-git`); see `README.md`.
+
 ## Independent review
 
 An independent code review found 13 defects (2 critical, 4 high, 5 medium and low items) after the first full test run. All were fixed and each has a regression test in `tests/integration/test_review_fixes.py`; three requirements (FR-EXP-08, FR-APP-06, SEC-09) were added to the SRS. The report is `plans/reports/code-reviewer-261021-1220-industrial-icon-designer.md`.

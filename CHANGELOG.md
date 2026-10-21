@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (2026-10-21)
 
-- Project license is MIT; README now opens with the project logo, a tech stack badge row and a pixel-art intro GIF (`docs/media/intro.gif`, built by `examples/build_intro_gif.py`).
+- The repository is now a Claude Code plugin and marketplace (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`): install with `/plugin marketplace add quanap5/industrial-icon-designer`. The locked upstream skills are committed so the plugin is self-contained.
+- `SKILL.md` explains plugin and checkout paths (`${CLAUDE_PLUGIN_ROOT}`, `${CLAUDE_PLUGIN_DATA}`) and the one-time environment setup.
+- Project license is MIT; README opens with the project logo, a tech stack badge row and a pixel-art intro GIF (`docs/media/intro.gif`, built by `examples/build_intro_gif.py`).
 
 ## 0.1.0 (2026-10-21)
 

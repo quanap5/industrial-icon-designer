@@ -37,6 +37,10 @@ defusedxml, pytest, and three pinned upstream skills from [shadcn-labs/skills](h
 
 ## What it does
 
+<p align="center">
+  <img src="work_flow_diagram.png" alt="Workflow diagram of the Industrial Icon Designer skill" width="900">
+</p>
+
 1. Inventories references (stable IDs, meaning, usage, sizes) without touching them.
 2. Analyzes them, audits any SVG references, and records a redesign mode (`normalize`, `redraw`, `reinterpret`).
 3. Keeps `style-spec.json` (authoritative) and `icon-style.md` (explanation) in sync.
@@ -46,7 +50,28 @@ defusedxml, pytest, and three pinned upstream skills from [shadcn-labs/skills](h
 7. Records testing in real Desktop and Web contexts; without access the honest status is `ASSETS_READY`, never `APPLICATION_VALIDATED`.
 8. Extends and versions the set with duplicate-meaning checks and invalidation of only what changed.
 
-## Setup
+## Install as a Claude Code plugin
+
+This repository is both a Claude Code marketplace and a plugin, so other people can install it without cloning:
+
+```text
+/plugin marketplace add quanap5/industrial-icon-designer
+/plugin install industrial-icon-designer@quanap5-plugins
+```
+
+On Claude Code 2.1.275 or later one step also works: `/plugin install industrial-icon-designer --marketplace quanap5/industrial-icon-designer`.
+The skill then runs as `/industrial-icon-designer:industrial-icon-designer`.
+
+**The repository is private**, so each person needs two things and nothing else:
+
+1. read access to the repository (invite them as a collaborator), and
+2. one working git credential on their machine: an SSH key that does not prompt for a passphrase, **or** `gh auth login` followed by `gh auth setup-git`. On a machine without a GitHub SSH key also set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1`.
+
+Auto-update is off by default; people get new releases with `/plugin marketplace update quanap5-plugins`, and only when `version` in `.claude-plugin/plugin.json` changes. Remove it with `claude plugin uninstall industrial-icon-designer@quanap5-plugins`.
+
+The plugin does not install Python or the renderer. After installing, do the one-time environment setup that `skills/industrial-icon-designer/SKILL.md` describes (a Python 3.11 environment under the plugin data directory, plus `resvg`), then run `doctor.py`. A plugin runs code with your user privileges, so read it before you install it.
+
+## Setup from a checkout
 
 Python 3.11+, the `resvg` renderer, and the Python packages in `requirements.lock`. On WSL2/Linux:
 
@@ -114,7 +139,7 @@ requirement is traceable. The full demo build (`examples/build_demo.py`) is itse
 
 ## Uninstall
 
-Remove `.claude/skills/industrial-icon-designer` (a symlink), the three `.claude/skills/icon-set-*` directories, `env-py311/`, and `dependencies.lock.json`. Work sets under `icon-work/` and exported assets are yours and are not touched.
+Plugin install: `claude plugin uninstall industrial-icon-designer@quanap5-plugins`. Checkout: remove the `.claude/skills/industrial-icon-designer` symlink and `env-py311/`. Work sets under `icon-work/` and exported assets are yours and are not touched.
 
 ## Limitations
 

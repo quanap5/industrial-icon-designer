@@ -7,7 +7,29 @@ description: Redesign industrial and SCADA UI icon sets from PNG or SVG referenc
 
 Redesign a UI icon set into one industrial/SCADA system. SVG masters are the only source of truth; Desktop PNGs and Web SVGs are derived by scripts. Requirements live in the project's `docs/SRS.md`.
 
-Scripts live in `scripts/` next to this file. Run them with the project's Python 3.11+ environment (`python scripts/<name>.py ...`). All outputs go to the user's working set `icon-work/<set-id>/`, never into this skill directory.
+All outputs go to the user's working set `icon-work/<set-id>/` in their own project, never into this skill or plugin directory.
+
+## Paths and environment
+
+Run every script as `"$PY" "$SCRIPTS/<name>.py" ...`. Use the column that applies:
+
+| | Installed as a plugin | Used from a checkout of the repository |
+|---|---|---|
+| `SCRIPTS` | `${CLAUDE_PLUGIN_ROOT}/skills/industrial-icon-designer/scripts` | `skills/industrial-icon-designer/scripts` |
+| `PY` (Python 3.11+ with the packages in `requirements.lock`) | `${CLAUDE_PLUGIN_DATA}/env/bin/python` | `env-py311/bin/python` |
+| `--project-root` for `doctor.py`, `analysis.py audit`, `validate_icons.py --phase source`, `batch.py done` | `${CLAUDE_PLUGIN_ROOT}` (holds the lock and the locked upstream skills) | `.` (the default) |
+
+The working directory stays the user's project, so `--set icon-work/<id>` and `--input <refs>` are relative to it. When this file is loaded outside a plugin, `${CLAUDE_PLUGIN_ROOT}` is not substituted; use the checkout column.
+
+One-time setup for a plugin install. It installs software, so ask the user first and never repeat it during a normal run:
+
+```bash
+uv venv --python 3.11 "${CLAUDE_PLUGIN_DATA}/env"
+uv pip install --python "${CLAUDE_PLUGIN_DATA}/env/bin/python" -r "${CLAUDE_PLUGIN_ROOT}/requirements.lock"
+cargo install resvg        # or a release binary from github.com/linebender/resvg
+```
+
+As a plugin the skill is invoked as `/industrial-icon-designer:industrial-icon-designer`; the subcommands below are arguments to it.
 
 ## Ground rules
 
@@ -20,8 +42,8 @@ Scripts live in `scripts/` next to this file. Run them with the project's Python
 
 ## First run
 
-1. `doctor.py --json` (add `--set DIR` inside a set). It reports Python, packages, the pinned `resvg` renderer, the locked upstream skills and which phases are blocked. It installs nothing.
-2. If the upstream skills are missing or differ from `dependencies.lock.json`, stop the affected phases and tell the user to run `setup_upstream.py` explicitly. Read `references/dependency-routing.md`.
+1. `doctor.py --json` with the `--project-root` from the table above (add `--set DIR` inside a set). It reports Python, packages, the pinned `resvg` renderer, the locked upstream skills and which phases are blocked. It installs nothing.
+2. If the upstream skills are missing or differ from `dependencies.lock.json`, stop the affected phases. In a checkout the user runs `setup_upstream.py` explicitly; as a plugin they update or reinstall the plugin. Never edit the installed upstream files. Read `references/dependency-routing.md`.
 3. No references yet? Offer scaffolding and the synthetic fixtures, labeled as fixtures. No brand colors? Use the provisional palette and say so. No target application? Previews are simulations and application validation stays `not-tested`.
 
 ## Subcommands (proposed conventions, not built-in commands)
