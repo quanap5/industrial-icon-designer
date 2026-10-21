@@ -4,8 +4,9 @@
 
 `icon-set-generator`, `icon-set-extend` and `icon-set-audit` come from
 https://github.com/shadcn-labs/skills at the commit recorded in `dependencies.lock.json`. Their `SKILL.md`,
-`references/` and `scripts/` are installed unmodified under `.claude/skills/` by `setup_upstream.py` and are
-verified by SHA-256 on every use. They are licensed as follows.
+`references/` and `scripts/` are installed unmodified under `.claude/skills/` by `setup_upstream.py`, are committed
+in this repository so that the plugin is self-contained, and are verified by SHA-256 on every use. They are
+licensed as follows.
 
 ```text
 MIT License

@@ -5,10 +5,8 @@ __pycache__/
 .pytest_cache/
 *.pyc
 
-# upstream skills are installed from the verified lock by setup_upstream.py
-.claude/skills/icon-set-audit/
-.claude/skills/icon-set-extend/
-.claude/skills/icon-set-generator/
+# .claude/skills/icon-set-* are the locked upstream skills; they are committed so the plugin is self-contained
+# (verified against dependencies.lock.json on every use, MIT notice in THIRD_PARTY_NOTICES.md)
 
 # working sets belong to the user; the synthetic example is the exception
 icon-work/
