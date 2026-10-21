@@ -37,6 +37,5 @@ An independent code review found 13 defects (2 critical, 4 high, 5 medium and lo
 - OI-03: DevExpress 15.1.11 bitmap and DPI behavior needs a real application.
 - OI-04: native Windows support is undecided.
 - OI-07: the default required-context profile (Desktop toolbar, ribbon, menu, device list; Web navigation, actions, list) needs the owner's confirmation.
-- `LICENSE` states that no license is granted yet; the owner has not chosen one.
 - The demo pilot review is an agent review. A human approval of the pilot is still required before real icons are generated.
 - A leftover directory from the first environment attempt remains at the project root and can be deleted by the owner (the tooling hook blocked removing it from this session).
