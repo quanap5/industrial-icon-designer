@@ -1,11 +1,39 @@
-# Industrial Icon Designer
+<p align="center">
+  <img src="logos/export/logo.svg" alt="Industrial Icon Designer logo" width="144">
+</p>
 
-A personal Claude Code skill that redesigns PNG/SVG icon sets into one consistent industrial/SCADA
-system. SVG masters are the single source of truth; Desktop PNGs and Web SVGs are derived by scripts.
+<h1 align="center">Industrial Icon Designer</h1>
 
-- Requirements: [`docs/SRS.md`](docs/SRS.md) (v2.0). Plan and milestone status: [`docs/implementation-plan.md`](docs/implementation-plan.md).
+<p align="center">
+  A Claude Code skill that redesigns icon sets for Desktop and Web apps into one consistent industrial/SCADA system.
+</p>
+
+<p align="center">
+  <a href="https://code.claude.com/docs/en/skills"><img alt="Claude Code skill" src="https://img.shields.io/badge/Claude%20Code-skill-D97757?logo=anthropic&logoColor=white"></a>
+  <img alt="Python 3.11+" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white">
+  <img alt="SVG masters" src="https://img.shields.io/badge/SVG-masters-FFB13B?logo=svg&logoColor=white">
+  <a href="https://github.com/linebender/resvg"><img alt="resvg 0.48.1" src="https://img.shields.io/badge/resvg-0.48.1-F74C00?logo=rust&logoColor=white"></a>
+  <img alt="Pillow 13" src="https://img.shields.io/badge/Pillow-13.0-3776AB">
+  <img alt="JSON Schema 2020-12" src="https://img.shields.io/badge/JSON%20Schema-2020--12-000000?logo=json&logoColor=white">
+  <img alt="Tested with pytest" src="https://img.shields.io/badge/tested%20with-pytest-0A9EDC?logo=pytest&logoColor=white">
+  <img alt="Platform WSL2 and Linux" src="https://img.shields.io/badge/platform-WSL2%20%7C%20Linux-FCC624?logo=linux&logoColor=black">
+  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+</p>
+
+<p align="center">
+  <img src="docs/media/intro.gif" alt="Pixel-art intro: old mismatched icons become one consistent set, exported as 160 PNGs and 10 SVGs, with 183 tests passing" width="720">
+</p>
+
+---
+
+SVG masters are the single source of truth; Desktop PNGs and Web SVGs are derived by scripts.
+Tech stack: Python 3.11, [resvg](https://github.com/linebender/resvg) for rendering, Pillow, jsonschema,
+defusedxml, pytest, and three pinned upstream skills from [shadcn-labs/skills](https://github.com/shadcn-labs/skills).
+
+- Requirements: [`docs/SRS.md`](docs/SRS.md) (v2.1). Plan and milestone status: [`docs/implementation-plan.md`](docs/implementation-plan.md).
 - Tested environment and dependency versions: [`docs/dependency-compatibility.md`](docs/dependency-compatibility.md).
 - Worked example (synthetic): [`examples/scada-demo/`](examples/scada-demo/).
+- The intro animation is built by [`examples/build_intro_gif.py`](examples/build_intro_gif.py) from the project's own masters, in the `pixel-arcade` style of the `ak:motion-video` catalog.
 
 ## What it does
 
@@ -96,3 +124,8 @@ Remove `.claude/skills/industrial-icon-designer` (a symlink), the three `.claude
 - No DevExpress 15.1.11 or Web application was available, so every actual application context is `not-tested`. Preview contexts are simulations.
 - Tracing, ICO/ICNS, React components, icon fonts, brand/launcher icons and an MCP server are deferred (SRS 1.2).
 - This workflow does not certify compliance with any industrial safety standard.
+
+## License
+
+Released under the [MIT License](LICENSE). Third-party components keep their own licenses; see
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

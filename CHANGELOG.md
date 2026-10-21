@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Project license is MIT; README now opens with the project logo, a tech stack badge row and a pixel-art intro GIF (`docs/media/intro.gif`, built by `examples/build_intro_gif.py`).
+
 ## 0.1.0 (2026-10-21)
 
 First implementation of SRS v2.0 for the `industrial-icon-designer` skill.
