@@ -108,7 +108,7 @@ Scripts (in `skills/industrial-icon-designer/scripts/`, all take `--set DIR` and
 | `inventory_icons.py` | References to `inventory.json` |
 | `analysis.py` | Brief, sample, baseline audit, analysis report |
 | `style_spec.py` | Style spec, `icon-style.md` summary and consistency check |
-| `render_preview.py` | Offline previews and UI-context simulations |
+| `render_preview.py` | Offline Before/After compare page (filter by group, Light/Dark, Normal/Disabled, size; `--group`) and Desktop, Web inline SVG and Web img context simulations |
 | `approvals.py` | Hash-bound approvals with rubric scores |
 | `batch.py` | Functional batches and checkpoints |
 | `validate_icons.py` | Source QA (`--phase source`) and post-export QA (`--phase exported`) |

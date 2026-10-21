@@ -52,7 +52,7 @@ As a plugin the skill is invoked as `/industrial-icon-designer:industrial-icon-d
 |---|---|---|
 | `init refs=<dir> out=<set>` | 1 Inventory | `inventory_icons.py --input <refs> --set <set>`; resolve `NEEDS_REVIEW` icons with the user; unresolved meaning is never auto-approved |
 | `analyze set=<set>` | 2 Analyze | `analysis.py brief|sample|audit`, write the proposed direction, `analysis.py finalize`. Read `references/png-redraw-rules.md` |
-| `pilot set=<set>` | 3-4 Spec, pilot | `style_spec.py init|generate|finalize`; redraw the sample; `render_preview.py`; review with `references/review-checklist.md`; record approval with `approvals.py` |
+| `pilot set=<set>` | 3-4 Spec, pilot | `style_spec.py init|generate|finalize`; redraw the sample; `render_preview.py` (Before/After compare page with group, theme, state and size controls; `--group a,b` limits groups; Desktop, Web inline SVG and Web img context simulations); review with `references/review-checklist.md`; record approval with `approvals.py` |
 | `generate set=<set>` | 5 Batches | only after a valid approval; `batch.py plan`, draw 5-10 icons per functional group, `batch.py done`, `validate_icons.py --phase source` |
 | `extend set=<set> icons=a,b` | 8 Maintenance | `duplicate_check.py`, then the generate loop for the new ids, then `export_assets.py` |
 | `audit set=<set>` | QA | `validate_icons.py --phase source`; upstream audit through `upstream_adapter` |
