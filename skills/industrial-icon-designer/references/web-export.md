@@ -4,7 +4,7 @@ Two explicit consumption profiles. Do not promise that a color set by host CSS r
 
 ## Inline (monochrome)
 
-`exports/web/<icon-id>.svg` keeps `stroke="currentColor"`. The SVG is inserted inline in the page, so the surrounding CSS `color` themes it. The consuming UI is responsible for accessibility: decorative icons get `aria-hidden="true"`; informative icons need an accessible name on the control or an inline `<title>`.
+`exports/web/<icon-id>.svg` keeps `currentColor` (as `stroke`, as `fill`, or both, following the master). Duotone keeps its `fill-opacity`. The SVG is inserted inline in the page, so the surrounding CSS `color` themes it. The consuming UI is responsible for accessibility: decorative icons get `aria-hidden="true"`; informative icons need an accessible name on the control or an inline `<title>`.
 
 ## Image (`<img src=...>`)
 

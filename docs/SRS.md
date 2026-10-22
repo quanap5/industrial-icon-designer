@@ -3,9 +3,9 @@
 
 | Field | Value |
 | --- | --- |
-| Document version | 2.3 |
-| Date | 2026-10-21 |
-| Supersedes | 2.2 (preserved as `docs/SRS-v2.2.md`); earlier: `docs/SRS-v2.1.md`, `docs/SRS-v2.0.md`, `docs/SRS-v1.1.md` |
+| Document version | 2.4 |
+| Date | 2026-10-22 |
+| Supersedes | 2.3 (preserved as `docs/SRS-v2.3.md`); earlier: `docs/SRS-v2.2.md`, `docs/SRS-v2.1.md`, `docs/SRS-v2.0.md`, `docs/SRS-v1.1.md` |
 | Structure | Aligned with ISO/IEC/IEEE 29148 (requirements separated from design, atomic and verifiable) |
 | Implementation status | Implemented as v0.1.0 on WSL2/Linux (see `docs/implementation-plan.md` and `docs/dependency-compatibility.md`); no real Desktop or Web application has been tested |
 | Project type | Greenfield personal skill project |
@@ -173,6 +173,8 @@ Implementation order is sequential for the MVP. Add tracing or multi-agent orche
 | FR-SPC-01 | The system shall produce `icon-style.md` and `style-spec.json` before batch generation. | M | T |
 | FR-SPC-02 | `style-spec.json` shall be authoritative for structured parameters. A check shall detect contradictory values between the two documents, and the explanatory parameter summary shall be regenerated when the JSON changes. | M | T |
 | FR-SPC-03 | The specification shall define grid, stroke, cap/join, corner treatment, safe padding, optical balance, common parts, theme tokens, states, size variants and export profiles. Grid 24×24 is a starting point and stroke widths 1.5 and 2 shall be compared during the pilot; both are configurable, not universal standards. | M | I |
+| FR-SPC-04 | `style-spec.json` shall declare the drawing form in `style_mode` (`outline`, `filled` or `duotone`; absent means `outline`) and, for duotone, `duotone_secondary_opacity`. Duotone shall be one colour at two opacities (`fill-opacity` on `currentColor`); a second colour requires an explicit token contract. A spec that declares no mode shall keep the geometry hash and validation result it had before modes existed. | M | T |
+| FR-SPC-05 | The system shall check the specification and each master against named consistency rules (minimum rendered stroke at the smallest size, mode per master, duotone opacity range, consistency and secondary contrast) and shall report a suggested value with every finding. A declared mode shall produce errors, an undeclared one warnings. A rule limit may be overridden only with a written reason, and overrides shall be listed in the report. | M | T |
 
 ### 4.4 Pilot (FR-PIL)
 
@@ -192,6 +194,7 @@ Implementation order is sequential for the MVP. Add tracing or multi-agent orche
 | FR-GEN-02 | Icons shall be real vector geometry (paths and shapes). Embedding PNG data in an SVG, or silently auto-tracing source pixels in the redraw route, is prohibited. | M | T |
 | FR-GEN-03 | `masters/` shall be the authoritative editable set. Small variants shall be explicit exceptions mapped to sizes. Exports are derived artifacts and shall not become the source of truth. Masters with embedded raster shall be rejected. | M | T |
 | FR-GEN-04 | Additions to the approved family shall apply `icon-set-extend` with the style and approved samples. | M | D |
+| FR-GEN-05 | A filled variant of an outline icon shall be its own inventory entry and master (`<id>-filled`) that records `variant_of`, shall not be reported as a duplicate of its base, shall always be judged as filled, and shall occupy the same painted box as its base within a tolerance. | M | T |
 
 ### 4.6 Quality assurance (FR-QA)
 
@@ -202,13 +205,14 @@ Implementation order is sequential for the MVP. Add tracing or multi-agent orche
 | FR-QA-03 | For normal icons the token-level check shall target a 3:1 foreground/background contrast ratio on declared backgrounds. Disabled contrast shall be reported separately. This does not establish application-wide accessibility compliance. | M | T |
 | FR-QA-04 | Only eligible icons shall enter final exports; pending drafts remain available for preview with clear labels. | M | T |
 | FR-QA-05 | Post-export QA shall inspect the generated files (size, alpha, colors, mapping, completeness, clipping, visual quality) separately from source SVG QA. | M | T |
+| FR-QA-06 | For a duotone set, post-export QA shall require exported pixels at the configured secondary alpha, so a renderer that drops `fill-opacity` is detected. | M | T |
 
 ### 4.7 Export (FR-EXP)
 
 | ID | Requirement | Pri | Ver |
 | --- | --- | --- | --- |
 | FR-EXP-01 | The system shall export transparent RGBA PNGs using the approved Desktop palette, per-icon `sizes_px`, themes and states. Each size shall be rendered directly at the target size, not upscaled from a smaller PNG. Preview backgrounds shall not appear in exports. | M | T |
-| FR-EXP-02 | The system shall export inline monochrome Web SVGs that use `currentColor`; accessibility expectations shall be documented for the consuming UI. | M | T |
+| FR-EXP-02 | The system shall export inline monochrome Web SVGs (outline, filled or opacity-duotone) that use `currentColor`; accessibility expectations shall be documented for the consuming UI. | M | T |
 | FR-EXP-03 | For SVG used through an `img` element, the system shall resolve colors or generate explicitly selected variants. It shall not promise inherited host CSS color through `img`. | M | T |
 | FR-EXP-04 | Desktop SVG export, React components and ICO are deferred profiles and shall not be enabled silently. | M | I |
 | FR-EXP-05 | The Desktop profile shall be conservative for the likely DevExpress 15.1.11 target and make no SVG, recoloring or DPI assumption until tested (C-02). | M | I |
@@ -373,6 +377,8 @@ All JSON artifacts shall be validated against versioned schemas with field-speci
 }
 ```
 
+Optional: `style_mode` (`outline` default, `filled`, `duotone`), `duotone_secondary_opacity` (duotone only) and `consistency_overrides` (`{rule: {reason, value}}`). Inventory entries may carry `variant_of` and `variant_kind` (`filled`).
+
 - Per-icon `sizes_px` overrides export defaults. Preview still includes the four mandatory sizes, with actual usage sizes identified. Additional DPI-derived bitmap sizes come from a target profile and are not implied by a display scaling percentage.
 - Manifest icon fields (required): `id`, `meaning`, `semantic_role`, `functional_group`, `usage_locations`, `sizes_px`, `source_path`, `source_sha256`, `master_path`, `master_sha256`, `route`, `status`, `style_version`, `variants`, `qa`, `exports`; optional `notes`.
 - `variants`: path/hash/size mapping; records an explicit fallback to master when no small variant is needed.
@@ -430,7 +436,7 @@ All JSON artifacts shall be validated against versioned schemas with field-speci
 | DR-03 | Balance perceived size; identical bounding boxes are insufficient. | I |
 | DR-04 | Preserve geometry across themes; change palette tokens only. | T |
 | DR-05 | Use an explicit disabled token rather than relying solely on opacity. | T |
-| DR-06 | Primary MVP icons are monochrome. Filled areas are allowed when consistent with the approved design; secondary color or duotone needs a later explicit token contract. | I |
+| DR-06 | Icons are monochrome in the forms `outline`, `filled` and `duotone` (one colour, two opacities). A real second colour needs an explicit token contract. | I |
 | DR-07 | Do not imply red/yellow/green equipment states without approved semantic rules. | I |
 | DR-08 | Provisional colors shall never be described as the user's official brand palette. | I |
 | DR-09 | Small variants may remove details but shall preserve meaning. | I |
@@ -452,14 +458,14 @@ Ten representative fixtures: save, open-folder, settings, add, alarm-list, trend
 | AT-04 | PNG redraw | Editable vector geometry, no embedded PNG; before/after review |
 | AT-05 | Ambiguous meaning | NEEDS_REVIEW, not automatically approved |
 | AT-06 | Existing SVG analysis | Baseline audit and selected redesign mode recorded |
-| AT-07 | Style outputs | `icon-style.md` and `style-spec.json` agree |
+| AT-07 | Style outputs | `icon-style.md` and `style-spec.json` agree; style modes keep old hashes and report consistency findings with suggestions |
 | AT-08 | Pilot and gate | 8–12 icons or documented exception; no full generation before valid approval |
 | AT-09 | Context preview | Four sizes, two themes/states, comparison and Desktop/Web context views |
-| AT-10 | Batch generation | Functional grouping, shared parts, per-batch checkpoints |
+| AT-10 | Batch generation | Functional grouping, shared parts, per-batch checkpoints; filled variants paired with their base |
 | AT-11 | Invalid/clipped source | Structural failure or visual finding with affected ID; not export-eligible |
 | AT-12 | Full export fixture matrix | 10 icons × 4 sizes × 2 themes × 2 states = 160 PNGs, plus 10 inline Web SVGs |
 | AT-13 | Per-icon size override | Output count follows inventory; irrelevant sizes not exported |
-| AT-14 | Theme/alpha and post-export QA | Correct RGBA dimensions, transparent backgrounds, palette, content mapping |
+| AT-14 | Theme/alpha and post-export QA | Correct RGBA dimensions, transparent backgrounds, palette, content mapping, duotone secondary alpha |
 | AT-15 | Web consumption profiles | Inline `currentColor` works; `img` profile uses resolved color |
 | AT-16 | Repeat export | Identical asset hashes; original references unchanged |
 | AT-17 | Interrupt and resume | Approved batches retained; pending work continued |
@@ -485,14 +491,14 @@ The 160 PNG count applies only to AT-12's uniform configuration. Production coun
 | AT-04 | FR-ANA-02, FR-PIL-01, FR-GEN-02, FR-GEN-03 |
 | AT-05 | FR-INV-05 |
 | AT-06 | FR-INV-06, FR-ANA-03, FR-ANA-04, FR-ANA-05 |
-| AT-07 | FR-SPC-01, FR-SPC-02, FR-SPC-03 |
+| AT-07 | FR-SPC-01, FR-SPC-02, FR-SPC-03, FR-SPC-04, FR-SPC-05 |
 | AT-08 | FR-ANA-01, FR-PIL-05, FR-QA-02 |
 | AT-09 | FR-PIL-02, FR-PIL-03, FR-PIL-04, DR-01, DR-02, DR-03, DR-06, DR-07, DR-08, DR-09, DR-10 |
-| AT-10 | FR-GEN-01, FR-GEN-04, FR-WFL-02 |
+| AT-10 | FR-GEN-01, FR-GEN-04, FR-GEN-05, FR-WFL-02 |
 | AT-11 | FR-QA-01, FR-QA-04 |
 | AT-12 | FR-EXP-01, FR-EXP-02, FR-EXP-04, DR-04, DR-05 |
 | AT-13 | FR-EXP-01 |
-| AT-14 | FR-QA-03, FR-QA-05, FR-EXP-05, FR-IF-03, FR-IF-04, FR-IF-05 |
+| AT-14 | FR-QA-03, FR-QA-05, FR-QA-06, FR-EXP-05, FR-IF-03, FR-IF-04, FR-IF-05 |
 | AT-15 | FR-EXP-02, FR-EXP-03 |
 | AT-16 | FR-EXP-06, FR-INV-02, FR-WFL-05, NFR-01, NFR-03 |
 | AT-17 | FR-WFL-01, FR-WFL-02, FR-WFL-08, NFR-02, NFR-05 |

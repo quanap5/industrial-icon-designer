@@ -11,6 +11,7 @@ Use for the pilot review, each batch, and any later change. Record who reviewed:
 | Optical balance | Does it carry the same visual weight as the rest of the set, not just the same bounding box? |
 | Family consistency | Same stroke, caps, joins, corner treatment and shared parts? |
 | Contrast | Does the normal token reach 3:1 on its background? Is disabled reported separately? |
+| Form parity (filled, duotone) | Is a filled icon as heavy as its outline neighbors, with knock-outs still open at 16 px? Is the secondary layer visible and distinct from the primary in both themes? Checked by eye; the rules `mode-matches-spec`, `duotone-secondary-contrast` and `variant-bounds-parity` only cover the measurable part. |
 
 Pilot acceptance: every score at least 4 and no semantic defect.
 

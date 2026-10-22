@@ -43,7 +43,7 @@ defusedxml, pytest, and three pinned upstream skills from [shadcn-labs/skills](h
 
 1. Inventories references (stable IDs, meaning, usage, sizes) without touching them.
 2. Analyzes them, audits any SVG references, and records a redesign mode (`normalize`, `redraw`, `reinterpret`).
-3. Keeps `style-spec.json` (authoritative) and `icon-style.md` (explanation) in sync.
+3. Keeps `style-spec.json` (authoritative) and `icon-style.md` (explanation) in sync. The drawing form is `style_mode`: `outline` (default), `filled` or `duotone` (one colour at two opacities). Consistency rules check the spec and every master and suggest a value for each finding; filled variants of outline icons are paired with their base.
 4. Redraws an 8-12 icon pilot, previews it at 16/20/24/32 px, Light/Dark, normal/disabled, and waits for approval bound to file hashes.
 5. Generates the rest in functional batches of 5-10 with checkpoints, then validates structure.
 6. Exports transparent Desktop PNGs and inline Web SVGs (optionally resolved-color SVGs for `<img>`), then inspects the exported files.
@@ -137,7 +137,9 @@ Scripts (in `skills/industrial-icon-designer/scripts/`, all take `--set DIR` and
 | `export_assets.py` | Staged, journaled export; `--dry-run`, `--web-img`, `--resolve overwrite` |
 | `app_validation.py` | Application-context records and honest status |
 | `progress.py` | Read-only step timeline, one-line status form and JSON |
-| `duplicate_check.py` | Duplicate-meaning check before adding an icon |
+| `duplicate_check.py` | Duplicate-meaning check before adding an icon (`--variant-of` for a filled variant) |
+| `variants.py` | Declare the filled variant `<id>-filled` of an outline icon |
+| `consistency.py` | Library of the style-mode consistency rules used by `style_spec.py` and `validate_icons.py` |
 
 Exit codes: 0 success, 2 input/configuration, 3 dependency, 4 validation, 5 rendering/write failure.
 
@@ -168,6 +170,7 @@ Plugin install: `claude plugin uninstall industrial-icon-designer@quanap5-plugin
 - Reading images through Claude Code may send their content to the configured model service. Nothing is sent to other services.
 - Only WSL2/Linux is tested. The demo set, fixtures and reviews are synthetic; the demo pilot review is an agent review, not human approval.
 - No DevExpress 15.1.11 or Web application was available, so every actual application context is `not-tested`. Preview contexts are simulations.
+- Filled and duotone output is verified with the pinned renderer only; how the DevExpress control composes the translucent duotone layer is `not-tested`. A real second colour, gradients, 3D, hand-drawn and pixel styles are out of scope.
 - Tracing, ICO/ICNS, React components, icon fonts, brand/launcher icons and an MCP server are deferred (SRS 1.2).
 - This workflow does not certify compliance with any industrial safety standard.
 

@@ -101,6 +101,30 @@ Each entry is one call. `when` says where it belongs; do not ask it earlier or i
       }
     ]
   },
+  "style_mode": {
+    "when": "Stage 3, only when the request and the project files do not state the drawing form. Otherwise use outline without asking.",
+    "questions": [
+      {
+        "question": "Which drawing form should the icon set use?",
+        "header": "Form",
+        "multiSelect": false,
+        "options": [
+          {"label": "Outline (Recommended)", "description": "Stroke-only icons for toolbars, sidebars and dashboards; the tested default."},
+          {"label": "Filled", "description": "Solid shapes with cut-out details for the whole set; read the 16 px preview closely."},
+          {"label": "Duotone", "description": "Outline plus a translucent secondary layer in the same colour; needs an opacity that stays visible in both themes."}
+        ]
+      },
+      {
+        "question": "Should icons with a selected state get a filled variant?",
+        "header": "Selected",
+        "multiSelect": false,
+        "options": [
+          {"label": "No variants (Recommended)", "description": "One icon per meaning; selection is shown by colour or background."},
+          {"label": "Filled variants", "description": "Adds <id>-filled beside each chosen icon; doubles those assets and is checked against its base box."}
+        ]
+      }
+    ]
+  },
   "grid": {
     "when": "Stage 3, only when the smallest usage size is 20 px or less, or the user asked for heavier or lighter strokes. Otherwise use grid 24 and stroke 1.5 without asking.",
     "questions": [
@@ -302,6 +326,7 @@ Each entry is one call. `when` says where it belongs; do not ask it earlier or i
 | `meaning` | Put the confirmed meaning into the metadata file and rerun `inventory_icons.py`. Skip keeps the icon `NEEDS_REVIEW` and out of approvals. |
 | `mode` | `analysis.py brief --mode <mode>`. Reinterpret is only recorded after `reinterpret` is answered. |
 | `reinterpret` | Approve the change: `analysis.py brief --mode reinterpret --semantic-approval`. Keep the metaphor: use `redraw`. |
+| `style_mode` | Outline: change nothing. Filled or duotone: `style_spec.py init --style-mode <form>` for a new set, or set `style_mode` (and `duotone_secondary_opacity`) in `style-spec.json`, then `style_spec.py generate`; a changed form makes the pilot approval stale by design. Filled variants: `variants.py add --set <set> --base <id>` for each chosen icon. |
 | `grid` | Edit `grid`, `stroke_width`, `padding` in `style-spec.json`, then `style_spec.py generate`. |
 | `stroke` | Set `stroke_width`, regenerate, rerender; a geometry change makes the pilot approval stale by design. |
 | `pilot` | Approve: `approvals.py record --type pilot --reviewer user --scores-file <your rubric>`. This is the only place a pilot approval is recorded. Other answers loop back to drawing and `render_preview.py`. |

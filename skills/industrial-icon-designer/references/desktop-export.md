@@ -11,6 +11,7 @@ The primary Desktop application is likely built on DevExpress 15.1.11. That vers
 - Each size is rendered directly from the master at that size with the pinned renderer. Never upscale a smaller PNG.
 - Theme and state choose a palette token (`normal` or `disabled`) substituted for `currentColor`. Geometry is unchanged.
 - Small variants replace the master at the sizes they are mapped to.
+- A filled variant (`<id>-filled`) exports like any icon. A duotone secondary layer is rendered with its `fill-opacity` as PNG alpha, and post-export QA requires pixels at that alpha. Whether the DevExpress control composes those translucent pixels as expected is `not-tested` until `app_validation.py` records evidence from the real application.
 
 ## What is not exported
 
