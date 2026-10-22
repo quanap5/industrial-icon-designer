@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 (2026-10-22)
+
+- New skill `logs` (`/<plugin>:logs`) and script `progress.py`: a read-only view of where a work set is in the workflow. It prints a vertical step timeline with colored markers (green done, cyan in progress, yellow waiting for you, red stopped, gray not yet), the gates between steps, a `YOU ARE HERE` marker and the next action; it also has a one-line form for Claude Code's status line and a JSON form. Everything is derived from the files the workflow already writes, nothing is written, and only the standard library is needed.
+- SRS 2.3 adds FR-WFL-08.
+
+## 0.2.1 (2026-10-22)
+
+- The skill now asks the user's decisions with `AskUserQuestion`: a short "Asking the user" section in `SKILL.md`, a catalog of 17 decision points in `references/questions.md` (setup, intake, meaning, redesign mode, grid and stroke, pilot and batch approval, export scope, drift, conflicts, palette, application tests, duplicates), and `tests/test_skill_questions.py` that checks the catalog against the tool's limits.
+- A user approval is recorded only from a real answer; no question offers the agent approving for the user. Without a way to ask, the skill uses documented defaults, records the assumption and stops at the human gate.
+- SRS 2.2 adds FR-WFL-07.
+
 ## Unreleased
 
 - Preview page reworked for comparison: each icon card shows labeled Before (reference) and After (redrawn) columns at actual size with an enlarged supplement. Group, theme, state, size and Before/After visibility are CSS-only controls, so pages stay offline and script-free.

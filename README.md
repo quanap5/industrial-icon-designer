@@ -50,6 +50,24 @@ defusedxml, pytest, and three pinned upstream skills from [shadcn-labs/skills](h
 7. Records testing in real Desktop and Web contexts; without access the honest status is `ASSETS_READY`, never `APPLICATION_VALIDATED`.
 8. Extends and versions the set with duplicate-meaning checks and invalidation of only what changed.
 
+## See where you are
+
+Ask for the `logs` skill (as a plugin: `/<plugin>:logs`) or run the script. It shows the eight steps as a vertical timeline, marks the step you are on (running, waiting for you, or stopped with the reason), shows the gate between steps and the next action, and never changes anything:
+
+```bash
+python3 skills/industrial-icon-designer/scripts/progress.py                 # newest set under ./icon-work
+python3 skills/industrial-icon-designer/scripts/progress.py --set icon-work/<id> --format json
+```
+
+Colors are used on a terminal (`NO_COLOR` turns them off, `--color always|never` and `--ascii` override). For a permanent one-line view, point Claude Code's status line at the script in your own settings; it prints nothing in a project without a work set:
+
+```json
+{ "statusLine": { "type": "command",
+  "command": "python3 /path/to/skills/industrial-icon-designer/scripts/progress.py --from-stdin --format line --color always" } }
+```
+
+A custom status line replaces most of the footer's key hints. Plugin users point `command` at the installed copy of `progress.py` under `~/.claude/plugins/`.
+
 ## Install as a Claude Code plugin
 
 This repository is both a Claude Code marketplace and a plugin, so other people can install it without cloning:
@@ -99,6 +117,8 @@ In Claude Code, ask for the workflow or use the proposed conventions (they are n
 /industrial-icon-designer extend set=./icon-work/scada icons=pump-stop,valve-open
 ```
 
+When a decision is yours (what an unclear icon means, redesign mode, approving the pilot, how to resolve export conflicts, which application contexts you tested), the skill asks with multiple-choice questions instead of free text. Only your real answer is recorded as an approval; the full list is in [`references/questions.md`](skills/industrial-icon-designer/references/questions.md).
+
 Scripts (in `skills/industrial-icon-designer/scripts/`, all take `--set DIR` and most take `--json`):
 
 | Script | Purpose |
@@ -116,6 +136,7 @@ Scripts (in `skills/industrial-icon-designer/scripts/`, all take `--set DIR` and
 | `invalidate.py` | Detect and apply invalidation |
 | `export_assets.py` | Staged, journaled export; `--dry-run`, `--web-img`, `--resolve overwrite` |
 | `app_validation.py` | Application-context records and honest status |
+| `progress.py` | Read-only step timeline, one-line status form and JSON |
 | `duplicate_check.py` | Duplicate-meaning check before adding an icon |
 
 Exit codes: 0 success, 2 input/configuration, 3 dependency, 4 validation, 5 rendering/write failure.

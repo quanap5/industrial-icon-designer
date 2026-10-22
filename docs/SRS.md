@@ -3,9 +3,9 @@
 
 | Field | Value |
 | --- | --- |
-| Document version | 2.1 |
+| Document version | 2.3 |
 | Date | 2026-10-21 |
-| Supersedes | 2.0 (preserved as `docs/SRS-v2.0.md`); 1.1 is `docs/SRS-v1.1.md` |
+| Supersedes | 2.2 (preserved as `docs/SRS-v2.2.md`); earlier: `docs/SRS-v2.1.md`, `docs/SRS-v2.0.md`, `docs/SRS-v1.1.md` |
 | Structure | Aligned with ISO/IEC/IEEE 29148 (requirements separated from design, atomic and verifiable) |
 | Implementation status | Implemented as v0.1.0 on WSL2/Linux (see `docs/implementation-plan.md` and `docs/dependency-compatibility.md`); no real Desktop or Web application has been tested |
 | Project type | Greenfield personal skill project |
@@ -245,6 +245,8 @@ Implementation order is sequential for the MVP. Add tracing or multi-agent orche
 | FR-WFL-04 | The system shall distinguish "skill implementation ready" from "this icon set validated in a production application". | M | I |
 | FR-WFL-05 | The system shall record provenance, dependency and config hashes, errors, approvals and remaining limitations, per 5.5. | M | T |
 | FR-WFL-06 | The skill shall keep core instructions concise and load references by phase, infer routine defaults from project data, and ask only for unresolved meanings, pilot approval or material design changes. It shall not introduce hidden shell execution or request unrestricted permissions. | M | I |
+| FR-WFL-07 | Decisions that belong to the user shall be asked as structured multiple-choice questions (the `AskUserQuestion` tool) defined in `references/questions.md`: 1-4 questions per call, 2-4 options each, the recommended option first, never an "Other" option, and nothing the request or the project files already answer. Only a real answer may be recorded as a user approval; no option shall let the agent approve for the user. When asking is impossible (headless run, subagent), the documented default shall be used for reversible choices, the assumption recorded in `brief.json` `notes`, and the run shall stop at the gate that needs a human. | S | T |
+| FR-WFL-08 | The system shall give a read-only view of where a work set is in the workflow (`progress.py`, used by the `logs` skill): a vertical step timeline with the step in progress and its state (running, waiting for the user, stopped), the gates between steps, the next action, pending changes and a one-line form for a status line. It shall derive everything from recorded files, write nothing, need only the standard library, honor `NO_COLOR`, and label an approval made by an agent as not human. | S | T |
 | FR-DEP-01 | The three upstream skills shall be installed separately, with repository origin and actual resolved files verified. Same-named skills from other repositories are not interchangeable. | M | T |
 | FR-DEP-02 | The upstream commit SHA and relevant file SHA-256 values shall be recorded in `dependencies.lock.json`. A branch-based installation is not a lock. | M | T |
 | FR-DEP-03 | Before writing an adapter, the installed `SKILL.md`, referenced files and actual script interfaces shall be inspected. Upstream filenames and arguments shall not be invented, and an upstream skill shall not be executed as a shell program. | M | I |
@@ -477,7 +479,7 @@ The 160 PNG count applies only to AT-12's uniform configuration. Production coun
 
 | Acceptance test | Verifies |
 | --- | --- |
-| AT-01 | FR-WFL-03, FR-WFL-06, FR-IF-01, FR-IF-02, NFR-06 |
+| AT-01 | FR-WFL-03, FR-WFL-06, FR-WFL-07, FR-IF-01, FR-IF-02, NFR-06 |
 | AT-02 | FR-DEP-01, FR-DEP-02, FR-DEP-03, FR-DEP-04, FR-DEP-05, FR-DEP-06, FR-DEP-07 |
 | AT-03 | FR-INV-01, FR-INV-02, FR-INV-03, FR-INV-04 |
 | AT-04 | FR-ANA-02, FR-PIL-01, FR-GEN-02, FR-GEN-03 |
@@ -493,7 +495,7 @@ The 160 PNG count applies only to AT-12's uniform configuration. Production coun
 | AT-14 | FR-QA-03, FR-QA-05, FR-EXP-05, FR-IF-03, FR-IF-04, FR-IF-05 |
 | AT-15 | FR-EXP-02, FR-EXP-03 |
 | AT-16 | FR-EXP-06, FR-INV-02, FR-WFL-05, NFR-01, NFR-03 |
-| AT-17 | FR-WFL-01, FR-WFL-02, NFR-02, NFR-05 |
+| AT-17 | FR-WFL-01, FR-WFL-02, FR-WFL-08, NFR-02, NFR-05 |
 | AT-18 | FR-MNT-03, FR-PIL-05, FR-WFL-05 |
 | AT-19 | SEC-01, SEC-02, SEC-03, SEC-04, SEC-05, SEC-06, SEC-09 |
 | AT-20 | FR-EXP-07, FR-EXP-08 |
@@ -588,6 +590,14 @@ not state: export gates (current pilot approval, palette review, drift, single w
 validated when no required context remains or changes are pending, and the ban on comments and processing
 instructions in masters. Open-issue statuses were updated. No earlier requirement was changed or withdrawn.
 
+### Changes from 2.1 to 2.2
+
+Added FR-WFL-07: the skill asks the user's decisions as structured multiple-choice questions and records user approval only from a real answer. The question catalog is `skills/industrial-icon-designer/references/questions.md` and is checked against the tool's limits by `tests/test_skill_questions.py`. No earlier requirement was changed or withdrawn.
+
+### Changes from 2.2 to 2.3
+
+Added FR-WFL-08: a read-only progress view (`progress.py` and the `logs` skill) with a vertical step timeline, status-line form and JSON, covered by `tests/integration/test_progress.py`. No earlier requirement was changed or withdrawn.
+
 ## Appendix B. Revision history
 
 | Version | Changes |
@@ -596,3 +606,5 @@ instructions in masters. Open-issue statuses were updated. No earlier requiremen
 | 1.1 | Full English rewrite; eight workflow stages; per-icon usage metadata; audit and redesign modes; 8–12 pilot; post-export checks; application validation; expanded acceptance tests |
 | 2.0 | Restructured to 29148; atomic traceable requirements; measurable NFRs; risks, constraints, open issues; renderer and `resvg` corrections; no design decision changed |
 | 2.1 | Implementation status and open issues updated; FR-EXP-08, FR-APP-06, SEC-09 added from review findings |
+| 2.2 | FR-WFL-07 added: structured user questions with a human-only approval rule |
+| 2.3 | FR-WFL-08 added: read-only progress view (`logs`) |
