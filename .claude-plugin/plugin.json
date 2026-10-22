@@ -1,7 +1,7 @@
 {
   "name": "qk",
   "displayName": "QK",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "QK skills for Claude Code: redesign industrial and SCADA UI icon sets (industrial-icon-designer) and show where a work set is in the workflow (logs).",
   "author": {
     "name": "quanap5"

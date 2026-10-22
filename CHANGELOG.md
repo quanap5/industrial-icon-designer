@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1 (2026-10-22)
+
+- Five new synthetic examples built by the real pipeline (`examples/build_style_examples.py`): `scada-filled`, `scada-duotone` (blue provisional palette), `scada-outline-bold` (stroke 2, graphite provisional palette), `scada-selected-states` (outline set plus filled variants of `valve`, `pump`, `alarm-list` and `settings`) and `scada-badged` (six outline icons with one solid badge each; the first pilot review refused three of them below 4 on 16 px clarity, so they got 16 px variants). Each reaches `ASSETS_READY`; reviews are agent reviews and application validation is `not-tested`.
+- `build_demo.py` gains `build_set`, a parameterised version of the demo build that the style examples reuse (it can also take its own references and metadata); the demo itself is built exactly as before.
+
 ## 0.4.0 (2026-10-22)
 
 - Style modes: `style-spec.json` gains `style_mode` (`outline` default, `filled`, `duotone`), `duotone_secondary_opacity` and `consistency_overrides`. Duotone is one colour at two opacities (`fill-opacity` on `currentColor`); no new palette token. A set that declares no mode keeps its geometry hash, approvals and validation result.
