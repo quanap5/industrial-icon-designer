@@ -15,7 +15,7 @@ QUESTIONS_MD = (SKILL_DIR / "references" / "questions.md").read_text(encoding="u
 BLOCK = re.search(r"```json\n(.*?)\n```", QUESTIONS_MD, re.S)
 POINTS: dict = json.loads(BLOCK.group(1)) if BLOCK else {}
 
-EXPECTED_POINTS = {"setup", "intake", "meaning", "mode", "reinterpret", "grid", "stroke", "pilot", "revise_which",
+EXPECTED_POINTS = {"setup", "intake", "meaning", "mode", "reinterpret", "style_mode", "grid", "stroke", "pilot", "revise_which",
                    "batch", "export_scope", "drift", "conflict", "palette", "app_access", "contexts", "duplicate"}
 RECOMMENDED = " (Recommended)"
 
@@ -109,7 +109,7 @@ def test_scripts_and_flags_named_in_the_catalog_exist():
         "approvals.py": ["--reviewer", "--scores-file", "--ids", "--type"],
         "app_validation.py": ["profile", "--remove", "--reason", "evaluate"],
         "render_preview.py": ["--group"],
-        "style_spec.py": ["generate"],
+        "style_spec.py": ["generate", "--style-mode"],
     }
     for script, flags in expectations.items():
         for flag in flags:
