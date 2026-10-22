@@ -199,6 +199,12 @@ def run(inputs: list[Path], set_dir: Path, metadata: Path | None, set_id: str | 
     icons = [build_icon(i, list(refs.values()), meta_rows.get(i), i in conflicts, set_dir)
              for i, refs in sorted(by_id.items())]
     unmatched = sorted(set(meta_rows) - set(by_id))
+    # a re-inventory must not forget the filled variants declared with variants.py
+    previous = set_dir / "inventory.json"
+    if previous.exists():
+        kept = {i["id"] for i in icons}
+        icons += [i for i in load_json(previous)["icons"] if i.get("variant_of") in kept and i["id"] not in kept]
+        icons.sort(key=lambda i: i["id"])
     sid = set_id or kebab_id(set_dir.resolve().name) or "icon-set"
     inventory = {"schema_version": SCHEMA_VERSION, "set_id": sid, "icons": icons,
                  "rejected": sorted(rejected, key=lambda r: r["path"]),

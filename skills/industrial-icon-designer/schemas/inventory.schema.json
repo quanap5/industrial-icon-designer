@@ -35,6 +35,15 @@
             "type": "string",
             "minLength": 1
           },
+          "variant_of": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "variant_kind": {
+            "enum": [
+              "filled"
+            ]
+          },
           "source_path": {
             "type": "string"
           },
@@ -143,6 +152,11 @@
           "fixture": {
             "type": "boolean"
           }
+        },
+        "dependentRequired": {
+          "variant_of": [
+            "variant_kind"
+          ]
         }
       }
     },

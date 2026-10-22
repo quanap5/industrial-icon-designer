@@ -157,6 +157,8 @@ def sync(set_dir: Path, persist: bool = True) -> dict:
             entry["stale_exports"] = sorted(stale.values(), key=lambda e: e["path"])
         if ic.get("notes"):
             entry["notes"] = ic["notes"]
+        if ic.get("variant_of"):
+            entry["variant_of"], entry["variant_kind"] = ic["variant_of"], ic.get("variant_kind", "filled")
         entry["status"] = derive_status(qa)
         icons.append(entry)
 
