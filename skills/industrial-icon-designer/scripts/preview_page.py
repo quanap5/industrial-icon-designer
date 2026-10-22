@@ -62,8 +62,8 @@ fieldset.ctl legend{float:left;font-size:12px;color:var(--muted);margin-right:6p
 .panel{border:1px solid var(--line);border-radius:8px;padding:12px;margin:10px 0;min-width:280px;background:var(--lbg)}
 .sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
 .surface{border:1px solid var(--line);border-radius:8px;padding:12px}
-.surface.light{background:var(--lbg);color:var(--lfg)}.surface.dark{background:var(--dbg);color:var(--dfg)}
-.surface .dis{color:var(--dis)}.surface h3{margin:10px 0 4px}.surface h4{color:inherit;opacity:.75;margin-bottom:8px}
+.surface.light{background:var(--lbg);color:var(--lfg);--icon-accent:var(--lacc)}.surface.dark{background:var(--dbg);color:var(--dfg);--icon-accent:var(--dacc)}
+.surface .dis{color:var(--dis);--icon-accent:var(--dis)}.surface h3{margin:10px 0 4px}.surface h4{color:inherit;opacity:.75;margin-bottom:8px}
 .pair2{display:inline-flex;align-items:center;gap:6px}
 .pair2 .tag{font-size:10px;opacity:.7}
 .row{display:flex;align-items:center;gap:8px;padding:3px 0}.strip{display:flex;gap:8px;padding:4px 0;flex-wrap:wrap}
@@ -104,6 +104,8 @@ def theme_vars(spec: dict) -> str:
     for key, short in (("light", "l"), ("dark", "d")):
         if t.get(key):
             parts.append(f"--{short}bg:{t[key]['background']};--{short}fg:{t[key]['normal']};--{short}dis:{t[key]['disabled']};")
+            if t[key].get("accent"):
+                parts.append(f"--{short}acc:{t[key]['accent']};")
     return ":root{" + "".join(parts) + "}"
 
 

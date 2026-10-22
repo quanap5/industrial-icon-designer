@@ -133,9 +133,9 @@ class Sources:
         got = self.master(iid, size)
         if not got:
             return None
-        color = self._tokens[theme]["normal" if state == "normal" else "disabled"]
+        color, accent = palette.state_colors(self._tokens[theme], state)
         rel = f"renders/web-img/{theme}/{state}/{size}/{iid}.svg"
-        atomic_write(self.prev / rel, recolor_svg(got[0], color).encode("utf-8"))
+        atomic_write(self.prev / rel, recolor_svg(got[0], color, accent).encode("utf-8"))
         return rel
 
 
@@ -177,15 +177,15 @@ def build(set_dir: Path, scope: str, groups: list[str] | None = None) -> dict:
                 render_reference(set_dir, icon, size, ref_png)
         for theme, tokens in sorted(spec["themes"].items()):
             for state in spec["states"]:
-                color = tokens["normal" if state == "normal" else "disabled"]
+                color, accent = palette.state_colors(tokens, state)
                 for size in sizes:
                     src = load_master(set_dir, iid, size, small) if have_master else None
                     if src:
-                        jobs.append((recolor_svg(src[0], color).encode(), prev / "renders" / theme / state / str(size) / f"{iid}.png", size))
+                        jobs.append((recolor_svg(src[0], color, accent).encode(), prev / "renders" / theme / state / str(size) / f"{iid}.png", size))
                         rendered.append((iid, theme, state, size))
                 src = load_master(set_dir, iid, ENLARGED_PX, small) if have_master else None
                 if src:
-                    jobs.append((recolor_svg(src[0], color).encode(), prev / "renders" / theme / state / "enlarged" / f"{iid}.png", ENLARGED_PX))
+                    jobs.append((recolor_svg(src[0], color, accent).encode(), prev / "renders" / theme / state / "enlarged" / f"{iid}.png", ENLARGED_PX))
         if not have_master:
             missing.append(iid)
 

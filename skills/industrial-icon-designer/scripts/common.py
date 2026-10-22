@@ -289,8 +289,14 @@ def resvg_version() -> str:
     return (out.stdout or out.stderr).strip().split()[-1]
 
 
-def recolor_svg(svg_text: str, color: str) -> str:
-    return svg_text.replace("currentColor", color)
+# A layer painted with the second palette token. Web inline keeps it: host CSS may set --icon-accent and the
+# fallback is currentColor. Desktop PNG and resolved-color SVG substitute the accent (or the normal color).
+ACCENT_PAINT = "var(--icon-accent, currentColor)"
+
+
+def recolor_svg(svg_text: str, color: str, accent: str | None = None) -> str:
+    """Resolve the theme paints: the accent layer first (it contains the currentColor fallback), then the rest."""
+    return svg_text.replace(ACCENT_PAINT, accent or color).replace("currentColor", color)
 
 
 def render_svg(svg_bytes: bytes, out_path: Path, width: int, height: int | None = None) -> None:

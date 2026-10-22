@@ -1,7 +1,7 @@
 ---
 title: "Icon style modes (outline, filled, duotone) with consistency guardrails"
 description: "Let industrial-icon-designer produce outline, filled and opacity-duotone icons in one set, customised through style-spec.json and protected by a guardrail layer."
-status: in-progress
+status: completed
 priority: P2
 effort: 3d
 branch: quanap5/feat/icon-style-modes
@@ -50,12 +50,12 @@ See `plans/reports/experiment-261022-1643-filled-duotone-validator.md`. Filled a
 
 | # | Phase | Status | Depends on |
 |---|---|---|---|
-| 1 | [Spec contract and hash compatibility](phase-01-spec-contract-and-hash-compatibility.md) | pending | none |
-| 2 | [Guardrail engine](phase-02-guardrail-engine.md) | pending | 1 |
-| 3 | [Variant pairing](phase-03-variant-pairing.md) | pending | 1 |
-| 4 | [Export and exported-phase checks](phase-04-export-and-exported-checks.md) | pending | 1, 2 |
-| 5 | [Preview and review rubric](phase-05-preview-and-review-rubric.md) | pending | 2, 3 |
-| 6 | [Docs, tests and regression](phase-06-docs-tests-regression.md) | pending | 2, 3, 4, 5 |
+| 1 | [Spec contract and hash compatibility](phase-01-spec-contract-and-hash-compatibility.md) | completed | none |
+| 2 | [Guardrail engine](phase-02-guardrail-engine.md) | completed | 1 |
+| 3 | [Variant pairing](phase-03-variant-pairing.md) | completed | 1 |
+| 4 | [Export and exported-phase checks](phase-04-export-and-exported-checks.md) | completed | 1, 2 |
+| 5 | [Preview and review rubric](phase-05-preview-and-review-rubric.md) | completed | 2, 3 |
+| 6 | [Docs, tests and regression](phase-06-docs-tests-regression.md) | completed | 2, 3, 4, 5 |
 
 Phases 2 and 3 touch different files and can run in parallel after phase 1.
 

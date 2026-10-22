@@ -30,6 +30,7 @@ from PIL import Image
 import approvals
 import invalidate
 import manifest as manifest_mod
+import palette
 import run_state
 import style_spec
 from common import (EXIT_INPUT, EXIT_OK, EXIT_RENDER, EXIT_VALIDATION, ToolError, atomic_write, canonical_hash, emit,
@@ -62,17 +63,19 @@ def plan_outputs(set_dir: Path, manifest: dict, spec: dict, kinds: set[str], ren
         if "desktop-png" in kinds:
             for theme, tokens in sorted(spec["themes"].items()):
                 for state in spec["states"]:
-                    color = tokens["normal" if state == "normal" else "disabled"].upper()
+                    color, accent = palette.state_colors(tokens, state)
                     for size in sorted(icon["sizes_px"]):
                         src = _variant_or_master(set_dir, iid, size, small)
                         src_sha = sha256_file(src)
                         items.append({"id": iid, "kind": "desktop-png", "theme": theme, "state": state,
-                                      "size_px": size, "color": color, "source": src, "source_sha256": src_sha,
+                                      "size_px": size, "color": color, "accent": accent, "source": src,
+                                      "source_sha256": src_sha,
                                       "path": f"exports/desktop/{theme}/{state}/{size}/{iid}.png",
                                       "config_sha256": canonical_hash({"f": FORMAT_VERSION, "kind": "desktop-png",
                                                                        "theme": theme, "state": state, "size": size,
                                                                        "color": color, "src": src_sha,
-                                                                       "renderer": renderer})})
+                                                                       "renderer": renderer,
+                                                                       **({"accent": accent} if accent else {})})})
         if "web-inline" in kinds:
             src = set_dir / "masters" / f"{iid}.svg"
             src_sha = sha256_file(src)
@@ -84,20 +87,21 @@ def plan_outputs(set_dir: Path, manifest: dict, spec: dict, kinds: set[str], ren
             src_sha = sha256_file(src)
             for theme, tokens in sorted(spec["themes"].items()):
                 for state in spec["states"]:
-                    color = tokens["normal" if state == "normal" else "disabled"].upper()
+                    color, accent = palette.state_colors(tokens, state)
                     items.append({"id": iid, "kind": "web-img", "theme": theme, "state": state, "color": color,
-                                  "source": src, "source_sha256": src_sha,
+                                  "accent": accent, "source": src, "source_sha256": src_sha,
                                   "path": f"exports/web/img/{theme}/{state}/{iid}.svg",
                                   "config_sha256": canonical_hash({"f": FORMAT_VERSION, "kind": "web-img",
                                                                    "theme": theme, "state": state, "color": color,
-                                                                   "src": src_sha})})
+                                                                   "src": src_sha,
+                                                                   **({"accent": accent} if accent else {})})})
     return items
 
 
 def svg_payload(item: dict) -> bytes:
     text = item["source"].read_text(encoding="utf-8")
     if item["kind"] == "web-img":
-        text = recolor_svg(text, item["color"])
+        text = recolor_svg(text, item["color"], item.get("accent"))
     return text.encode("utf-8")
 
 
@@ -269,8 +273,8 @@ def _export(set_dir: Path, target: str, web_img: bool, dry_run: bool, resolve: s
     for item in to_write:
         out = staging / item["path"]
         if item["kind"] == "desktop-png":
-            jobs.append((recolor_svg(item["source"].read_text(encoding="utf-8"), item["color"]).encode(), out,
-                         item["size_px"]))
+            jobs.append((recolor_svg(item["source"].read_text(encoding="utf-8"), item["color"],
+                                     item.get("accent")).encode(), out, item["size_px"]))
         else:
             atomic_write(out, svg_payload(item))
     render_many(jobs)

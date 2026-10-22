@@ -22,12 +22,12 @@ import run_state
 import style_spec
 import upstream_adapter
 from common import (EXIT_DEPENDENCY, EXIT_OK, EXIT_VALIDATION, ToolError, emit, ensure_inside, is_within, load_json, parse_svg,
-                    recolor_svg, render_svg, run_main, svg_findings, svg_viewbox, timed, write_json)
+                    recolor_svg, render_svg, run_main, svg_findings, svg_viewbox, timed, write_json, ACCENT_PAINT)
 
 DRAWABLE = {"path", "circle", "rect", "line", "polyline", "polygon", "ellipse"}
 COLOR_VALUE = re.compile(r"^\s*(#[0-9a-fA-F]{3,8}|rgba?\(|hsla?\(|[a-zA-Z]+)\s*$")
 KEBAB_ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-THEME_SAFE = {"none", "currentcolor", "inherit", "transparent"}
+THEME_SAFE = {"none", "currentcolor", "inherit", "transparent", ACCENT_PAINT.lower()}
 REPORT = "reports/pre-export-qa.json"
 
 
@@ -181,7 +181,7 @@ def _secondary_layer_problem(item: dict, size: int) -> str | None:
     opaque = re.sub(r'\sfill-opacity="[^"]*"', "", text)
     with tempfile.TemporaryDirectory() as tmp:
         out = Path(tmp) / "opaque.png"
-        render_svg(recolor_svg(opaque, item["color"]).encode(), out, size)
+        render_svg(recolor_svg(opaque, item["color"], item.get("accent")).encode(), out, size)
         with Image.open(out) as flat, Image.open(item["_png"]) as actual:
             diff = ImageChops.difference(flat.convert("RGBA").getchannel("A"), actual.convert("RGBA").getchannel("A"))
             if diff.point(lambda a: 255 if a >= 16 else 0).getbbox() is None:
@@ -247,11 +247,21 @@ def _png_problems(path: Path, item: dict, spec: dict) -> list[str]:
             # Edge pixels are partly transparent and their color is rounded when alpha is un-premultiplied,
             # so judge the alpha-weighted mean color of all content against the palette token.
             px = im.load()
-            weight = sum(px[x, y][3] for y in range(h) for x in range(w))
-            mean = [sum(px[x, y][3] * px[x, y][c] for y in range(h) for x in range(w)) / weight for c in range(3)]
-            if max(abs(mean[c] - want[c]) for c in range(3)) > 8:
-                errs.append(f"content color ({', '.join(str(round(m)) for m in mean)}) differs from the "
-                            f"{item['theme']}/{item['state']} token {item['color']}")
+            uses_accent = bool(item.get("accent")) and ACCENT_PAINT in item["source"].read_text(encoding="utf-8")
+            if uses_accent:
+                # two tokens: every fully opaque pixel must be one of them (edges are blends and are skipped)
+                allowed = [want, tuple(int(item["accent"].lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))]
+                stray = sum(1 for y in range(h) for x in range(w) if px[x, y][3] == 255
+                            and all(max(abs(px[x, y][c] - tok[c]) for c in range(3)) > 8 for tok in allowed))
+                if stray:
+                    errs.append(f"{stray} opaque pixel(s) match neither the {item['theme']}/{item['state']} token "
+                                f"{item['color']} nor the accent {item['accent']}")
+            else:
+                weight = sum(px[x, y][3] for y in range(h) for x in range(w))
+                mean = [sum(px[x, y][3] * px[x, y][c] for y in range(h) for x in range(w)) / weight for c in range(3)]
+                if max(abs(mean[c] - want[c]) for c in range(3)) > 8:
+                    errs.append(f"content color ({', '.join(str(round(m)) for m in mean)}) differs from the "
+                                f"{item['theme']}/{item['state']} token {item['color']}")
     except Exception as exc:  # unreadable PNG
         return [f"unreadable PNG: {exc}"]
     return errs
@@ -299,7 +309,8 @@ def validate_exported(set_dir: Path) -> dict:
         if item["kind"] == "desktop-png":
             res["errors"] += [f"{item['path']}: {m}" for m in _png_problems(final, item, spec)]
             out = tmp / item["path"]
-            jobs.append((recolor_svg(item["source"].read_text(encoding="utf-8"), item["color"]).encode(), out,
+            jobs.append((recolor_svg(item["source"].read_text(encoding="utf-8"), item["color"],
+                                     item.get("accent")).encode(), out,
                          item["size_px"]))
             rerender.append((item, out, final))
         else:

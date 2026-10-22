@@ -130,8 +130,9 @@ def expected_rows(spec: dict) -> dict[str, str]:
     rows = {k: fmt(spec[k]) for k in SCALARS}
     rows.update({k: fmt(v) for k, v in mode_parameters(spec).items()})
     for theme, tokens in sorted(spec["themes"].items()):
-        for token in ("background", "normal", "disabled"):
-            rows[f"themes.{theme}.{token}"] = tokens[token].upper()
+        for token in ("background", "normal", "disabled", "accent"):
+            if token in tokens:
+                rows[f"themes.{theme}.{token}"] = tokens[token].upper()
     return rows
 
 

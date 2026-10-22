@@ -1,7 +1,7 @@
 ---
 phase: 4
 title: "Export and exported-phase checks"
-status: pending
+status: completed
 priority: P1
 effort: "5h"
 dependencies: [1, 2]

@@ -25,6 +25,15 @@ def contrast_ratio(a: str, b: str) -> float:
     return round((hi + 0.05) / (lo + 0.05), 2)
 
 
+def state_colors(tokens: dict, state: str) -> tuple[str, str | None]:
+    """The color of a state and, for the normal state only, the optional accent. Disabled paints every layer
+    with the single disabled token."""
+    if state != "normal":
+        return tokens["disabled"].upper(), None
+    accent = tokens.get("accent")
+    return tokens["normal"].upper(), accent.upper() if accent else None
+
+
 def contrast_report(spec: dict) -> dict:
     """Normal tokens must reach 3:1 on their background; disabled is reported separately."""
     themes = {}
@@ -37,5 +46,10 @@ def contrast_report(spec: dict) -> dict:
                        "passes": normal >= NORMAL_MIN_RATIO},
             "disabled": {"color": tokens["disabled"].upper(), "ratio": disabled, "reported_only": True},
         }
+        if tokens.get("accent"):
+            ratio = contrast_ratio(tokens["accent"], tokens["background"])
+            themes[name]["accent"] = {"color": tokens["accent"].upper(), "ratio": ratio, "required": NORMAL_MIN_RATIO,
+                                      "passes": ratio >= NORMAL_MIN_RATIO}
     return {"scope": "token-level only; not a substitute for visual review or an accessibility audit",
-            "passes": all(t["normal"]["passes"] for t in themes.values()), "themes": themes}
+            "passes": all(t["normal"]["passes"] and t.get("accent", {"passes": True})["passes"]
+                          for t in themes.values()), "themes": themes}

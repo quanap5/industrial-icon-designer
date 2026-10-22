@@ -1,7 +1,7 @@
 ---
 phase: 6
 title: "Docs, tests and regression"
-status: pending
+status: completed
 priority: P1
 effort: "6h"
 dependencies: [2, 3, 4, 5]

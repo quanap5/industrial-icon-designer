@@ -1,7 +1,7 @@
 ---
 phase: 1
 title: "Spec contract and hash compatibility"
-status: pending
+status: completed
 priority: P1
 effort: "4h"
 dependencies: []

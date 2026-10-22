@@ -13,13 +13,12 @@ installs or updates anything.
 from __future__ import annotations
 
 import json
-import shutil
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
-from common import EXIT_DEPENDENCY, EXIT_VALIDATION, ToolError, load_json, sha256_file
+from common import ACCENT_PAINT, EXIT_DEPENDENCY, EXIT_VALIDATION, ToolError, load_json, sha256_file
 
 DEFAULT_CORNER_RADIUS = 2
 DEFAULT_MIN_GAP = 4.5
@@ -78,9 +77,11 @@ def to_upstream_spec(style: dict) -> dict:
 
 
 def stage_svgs(svg_files: list[Path], into: Path) -> Path:
+    """Copy masters for an upstream check. The accent paint is replaced by currentColor in the copy: the locked
+    upstream validator only knows currentColor, and the structure it checks is identical."""
     into.mkdir(parents=True, exist_ok=True)
     for f in svg_files:
-        shutil.copyfile(f, into / f.name)
+        (into / f.name).write_bytes(f.read_bytes().replace(ACCENT_PAINT.encode(), b"currentColor"))
     return into
 
 
@@ -113,8 +114,10 @@ def audit_svgs(svg_files: list[Path], project_root: Path, lock: dict, style: dic
 def validate_masters(masters_dir: Path, project_root: Path, lock: dict, style: dict,
                      focus: list[str] | None = None) -> dict:
     extra = ["--focus", ",".join(focus)] if focus else None
-    return run_upstream("icon-set-generator", "validate_icons.py", masters_dir, project_root, lock,
-                        to_upstream_spec(style), extra)
+    with tempfile.TemporaryDirectory() as tmp:
+        staged = stage_svgs(sorted(Path(masters_dir).glob("*.svg")), Path(tmp) / "masters")
+        return run_upstream("icon-set-generator", "validate_icons.py", staged, project_root, lock,
+                            to_upstream_spec(style), extra)
 
 
 def infer_style(masters_dir: Path, project_root: Path, lock: dict) -> dict:

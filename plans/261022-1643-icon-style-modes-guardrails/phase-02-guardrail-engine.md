@@ -1,7 +1,7 @@
 ---
 phase: 2
 title: "Guardrail engine"
-status: pending
+status: completed
 priority: P1
 effort: "8h"
 dependencies: [1]

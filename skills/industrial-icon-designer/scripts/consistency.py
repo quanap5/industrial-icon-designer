@@ -21,7 +21,7 @@ from pathlib import Path
 
 import palette
 import style_spec
-from common import EXIT_INPUT, ToolError
+from common import ACCENT_PAINT, EXIT_INPUT, ToolError
 
 DRAWABLE = {"path", "circle", "rect", "line", "polyline", "polygon", "ellipse"}
 STROKE_MIN_PX = 1.0
@@ -29,10 +29,14 @@ OPACITY_RANGE = (0.2, 0.5)
 SECONDARY_CONTRAST_MIN = 1.5
 OPACITY_TOLERANCE = 0.01
 VARIANT_BOUNDS_TOLERANCE = 1.0  # grid units
+ACCENT_CONTRAST_MIN = 3.0
+ACCENT_DISTANCE_MIN = 80  # RGB distance between the accent and the normal token
+ACCENT_LOWER = ACCENT_PAINT.lower()
 LIMIT_RULES = ("stroke-min-at-smallest", "duotone-opacity-range", "duotone-secondary-contrast",
-               "variant-bounds-parity")
+               "variant-bounds-parity", "accent-contrast", "accent-distinct")
 RULES = ("stroke-min-at-smallest", "duotone-opacity-range", "duotone-secondary-contrast", "mode-matches-spec",
-         "duotone-opacity-consistent", "variant-bounds-parity")
+         "duotone-opacity-consistent", "variant-bounds-parity", "accent-token-complete", "accent-contrast",
+         "accent-distinct", "accent-token-declared")
 
 
 def _local(tag: str) -> str:
@@ -136,7 +140,40 @@ def spec_findings(spec: dict) -> list[dict]:
                     f"secondary layer {blended} on {tokens['background'].upper()} in theme '{name}' has contrast "
                     f"{ratio}:1, below {floor}:1",
                     f"duotone_secondary_opacity {wanted:g}" if wanted else "a darker or lighter normal token"))
+    out += _accent_findings(spec)
     return out
+
+
+def _accent_findings(spec: dict) -> list[dict]:
+    """The optional second palette token: every theme has one, it is readable, and it differs from `normal`."""
+    out: list[dict] = []
+    accented = {name: t for name, t in spec["themes"].items() if t.get("accent")}
+    if not accented:
+        return out
+    severity = "error" if is_strict(spec) else "warning"
+    missing = sorted(set(spec["themes"]) - set(accented))
+    if missing:
+        out.append(finding("accent-token-complete", "error", f"theme(s) {', '.join(missing)} have no accent while "
+                           "others do", "give every theme an accent colour, or remove them all"))
+    floor = limit(spec, "accent-contrast", ACCENT_CONTRAST_MIN)
+    apart = limit(spec, "accent-distinct", ACCENT_DISTANCE_MIN)
+    for name, tokens in sorted(accented.items()):
+        ratio = palette.contrast_ratio(tokens["accent"], tokens["background"])
+        if ratio < floor:
+            out.append(finding("accent-contrast", severity, f"accent {tokens['accent'].upper()} on "
+                               f"{tokens['background'].upper()} in theme '{name}' has contrast {ratio}:1, below {floor}:1",
+                               f"an accent with at least {floor}:1 against {tokens['background'].upper()}"))
+        distance = _rgb_distance(tokens["accent"], tokens["normal"])
+        if distance < apart:
+            out.append(finding("accent-distinct", "warning", f"accent {tokens['accent'].upper()} is close to the "
+                               f"normal token {tokens['normal'].upper()} in theme '{name}' (distance {distance:.0f})",
+                               f"a colour at least {apart} apart from {tokens['normal'].upper()} in RGB"))
+    return out
+
+
+def _rgb_distance(a: str, b: str) -> float:
+    x, y = a.lstrip("#"), b.lstrip("#")
+    return math.sqrt(sum((int(x[i:i + 2], 16) - int(y[i:i + 2], 16)) ** 2 for i in (0, 2, 4)))
 
 
 # ------------------------------------------------------------------------------ icon level
@@ -169,7 +206,7 @@ def _parse_opacity(raw: str | None) -> float | None:
 def _layers(root) -> dict:
     parents = _parents(root)
     layers = {"stroke": False, "fill": False, "secondary": [], "primary_fill": False, "unreadable_opacity": [],
-              "unfilled": 0, "hidden_opacity": 0}
+              "unfilled": 0, "hidden_opacity": 0, "accent": False}
     for el in root.iter():
         if "opacity" in el.attrib or re.search(r"opacity\s*:", el.attrib.get("style", ""), re.I):
             layers["hidden_opacity"] += 1  # element opacity or style opacity: the checks cannot read it
@@ -177,9 +214,12 @@ def _layers(root) -> dict:
             continue
         if _inherited(el, "fill", parents) is None:
             layers["unfilled"] += 1
-        if _inherited(el, "stroke", parents) == "currentcolor":
+        stroke_paint, fill_paint = _inherited(el, "stroke", parents), _inherited(el, "fill", parents)
+        if ACCENT_LOWER in (stroke_paint, fill_paint):
+            layers["accent"] = True
+        if stroke_paint in ("currentcolor", ACCENT_LOWER):
             layers["stroke"] = True
-        if _inherited(el, "fill", parents) == "currentcolor":
+        if fill_paint in ("currentcolor", ACCENT_LOWER):
             layers["fill"] = True
             raw = _inherited(el, "fill-opacity", parents)
             opacity = _parse_opacity(raw)
@@ -203,6 +243,9 @@ def icon_findings(root, spec: dict, mode: str | None = None) -> list[dict]:
     def add(rule: str, message: str, suggested, level: str = severity) -> None:
         out.append(finding(rule, level, message, suggested))
 
+    if layers["accent"] and not all(t.get("accent") for t in spec["themes"].values()):
+        add("accent-token-declared", "a layer is painted with the accent but a theme declares no accent colour, so "
+            "it falls back to the normal colour", 'add "accent": "#RRGGBB" to every theme in style-spec.json')
     if layers["unreadable_opacity"]:
         add("mode-matches-spec", f"fill-opacity {layers['unreadable_opacity']} is not a number between 0 and 1",
             'fill-opacity="0.3" (a number from 0 to 1, or a percentage)', "error")

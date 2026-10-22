@@ -1,7 +1,7 @@
 ---
 phase: 5
 title: "Preview and review rubric"
-status: pending
+status: completed
 priority: P2
 effort: "4h"
 dependencies: [2, 3]
