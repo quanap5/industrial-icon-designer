@@ -15,16 +15,18 @@ import argparse
 import re
 from pathlib import Path
 
+import consistency
 import manifest as manifest_mod
 import palette
 import run_state
 import style_spec
 import upstream_adapter
 from common import (EXIT_DEPENDENCY, EXIT_OK, EXIT_VALIDATION, ToolError, emit, ensure_inside, is_within, load_json, parse_svg,
-                    recolor_svg, run_main, svg_findings, svg_viewbox, timed, write_json)
+                    recolor_svg, render_svg, run_main, svg_findings, svg_viewbox, timed, write_json)
 
 DRAWABLE = {"path", "circle", "rect", "line", "polyline", "polygon", "ellipse"}
 COLOR_VALUE = re.compile(r"^\s*(#[0-9a-fA-F]{3,8}|rgba?\(|hsla?\(|[a-zA-Z]+)\s*$")
+KEBAB_ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 THEME_SAFE = {"none", "currentcolor", "inherit", "transparent"}
 REPORT = "reports/pre-export-qa.json"
 
@@ -33,8 +35,10 @@ def _local(tag: str) -> str:
     return tag.rsplit("}", 1)[-1].lower()
 
 
-def check_svg(path: Path, grid: int, root_dir: Path | None = None) -> tuple[list[str], list[str]]:
-    """Local structural checks for one master or variant file."""
+def check_svg(path: Path, grid: int, root_dir: Path | None = None, spec: dict | None = None,
+              mode: str | None = None) -> tuple[list[str], list[str]]:
+    """Local structural checks for one master or variant file. With a spec, the icon is also judged against
+    its style mode (`mode` overrides the mode of the set, for example for a filled variant)."""
     errors: list[str] = []
     warnings: list[str] = []
     if root_dir is not None and path.is_symlink() and not is_within(path, root_dir):
@@ -64,6 +68,10 @@ def check_svg(path: Path, grid: int, root_dir: Path | None = None) -> tuple[list
     fill_ok = any(el.attrib.get("fill", "").lower() == "currentcolor" for el in root.iter())
     if not (stroke_ok or fill_ok):
         warnings.append("no currentColor stroke or fill; the icon cannot take theme colors")
+    if spec is not None and not errors:
+        mode_errors, mode_warnings = consistency.split(consistency.icon_findings(root, spec, mode))
+        errors += mode_errors
+        warnings += mode_warnings
     return errors, warnings
 
 
@@ -72,18 +80,31 @@ def validate_source(set_dir: Path, project_root: Path, lock_path: Path | None, i
     ensure_inside(set_dir, "masters", "variants", "reports")
     spec = style_spec.load_spec(set_dir)
     grid = spec["grid"]
-    inv_ids = {i["id"] for i in load_json(set_dir / "inventory.json")["icons"]}
+    inv_by_id = {i["id"]: i for i in load_json(set_dir / "inventory.json")["icons"]}
+    inv_ids = set(inv_by_id)
+    spec_findings = consistency.spec_findings(spec)
+    spec_errors, spec_warnings = consistency.split(spec_findings)
     masters = sorted((set_dir / "masters").glob("*.svg")) if (set_dir / "masters").is_dir() else []
     if ids:
         masters = [m for m in masters if m.stem in ids]
     results: dict[str, dict] = {}
     for m in masters:
-        errors, warnings = check_svg(m, grid, set_dir)
+        base_id, variant_problem = _variant_base(m.stem, inv_by_id)
+        mode = "filled" if base_id else None
+        errors, warnings = check_svg(m, grid, set_dir, spec, mode)
+        if variant_problem:
+            errors.append(variant_problem)
+        errors += [f"style spec: {e}" for e in spec_errors]
+        warnings += [f"style spec: {w}" for w in spec_warnings]
         if m.stem not in inv_ids:
             errors.append("master has no inventory entry (unknown id)")
+        if base_id:
+            pair_errors, pair_warnings = _variant_pair(set_dir, m, base_id, grid, spec)
+            errors += pair_errors
+            warnings += pair_warnings
         variant = set_dir / "variants" / "small" / m.name
         if variant.is_file():
-            v_errors, v_warnings = check_svg(variant, grid, set_dir)
+            v_errors, v_warnings = check_svg(variant, grid, set_dir, spec, mode)
             errors += [f"small variant: {e}" for e in v_errors]
             warnings += [f"small variant: {w}" for w in v_warnings]
         results[m.stem] = {"errors": errors, "warnings": warnings}
@@ -96,8 +117,12 @@ def validate_source(set_dir: Path, project_root: Path, lock_path: Path | None, i
                                                          ids if ids else None)
             for r in upstream["results"]:
                 if r["icon"] in results:
+                    # a filled variant legitimately measures larger than the mostly-outline median; the
+                    # pair rule (variant-bounds-parity) compares it with its own base instead
+                    is_variant = _variant_base(r["icon"], inv_by_id)[0] is not None
                     results[r["icon"]]["errors"] += [f"consistency: {e}" for e in r["errors"]]
-                    results[r["icon"]]["warnings"] += [f"consistency: {w}" for w in r["warnings"]]
+                    results[r["icon"]]["warnings"] += [f"consistency: {w}" for w in r["warnings"]
+                                                       if not (is_variant and "envelope" in w)]
         except ToolError as exc:
             if exc.code != EXIT_DEPENDENCY:
                 raise
@@ -107,6 +132,8 @@ def validate_source(set_dir: Path, project_root: Path, lock_path: Path | None, i
         r["status"] = "failed" if r["errors"] else "passed"
     report = {"phase": "source", "grid": grid, "style_version": spec["style_version"],
               "icons": dict(sorted(results.items())), "contrast": palette.contrast_report(spec),
+              "style_mode": style_spec.style_mode(spec),
+              "consistency": {"spec": spec_findings, "overrides": consistency.overrides(spec)},
               "blocked": blocked,
               "summary": {"checked": len(results), "passed": sum(r["status"] == "passed" for r in results.values()),
                           "failed": sum(r["status"] == "failed" for r in results.values())}}
@@ -122,6 +149,57 @@ def validate_source(set_dir: Path, project_root: Path, lock_path: Path | None, i
     manifest_mod.set_structural(set_dir, {i: (r["status"], REPORT) for i, r in results.items()})
     _record_state(set_dir, spec["set_id"], results)
     return report
+
+
+def _variant_base(icon_id: str, inv_by_id: dict) -> tuple[str | None, str | None]:
+    """The base id of a filled variant and, instead, the problem with a variant_of that cannot be trusted
+    (not an id, itself, missing, or a variant of a variant)."""
+    base = inv_by_id.get(icon_id, {}).get("variant_of")
+    if base is None:
+        return None, None
+    if not isinstance(base, str) or not KEBAB_ID.match(base):
+        return None, f"variant_of {base!r} is not an icon id"
+    if base == icon_id:
+        return None, "variant_of names the icon itself"
+    if base not in inv_by_id:
+        return None, f"variant_of {base} is not in the inventory"
+    if inv_by_id[base].get("variant_of"):
+        return None, f"variant_of {base} is itself a variant; a variant belongs to an outline icon"
+    return base, None
+
+
+def _secondary_layer_problem(item: dict, size: int) -> str | None:
+    """Render the master with its fill-opacity removed. If the exported PNG shows no alpha difference from
+    that opaque render, the renderer dropped the translucent layer."""
+    import tempfile
+
+    from PIL import Image, ImageChops
+
+    text = item["source"].read_text(encoding="utf-8")
+    if "fill-opacity" not in text:
+        return None  # a filled variant or an outline-only master has no secondary layer to lose
+    opaque = re.sub(r'\sfill-opacity="[^"]*"', "", text)
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "opaque.png"
+        render_svg(recolor_svg(opaque, item["color"]).encode(), out, size)
+        with Image.open(out) as flat, Image.open(item["_png"]) as actual:
+            diff = ImageChops.difference(flat.convert("RGBA").getchannel("A"), actual.convert("RGBA").getchannel("A"))
+            if diff.point(lambda a: 255 if a >= 16 else 0).getbbox() is None:
+                return "the translucent secondary layer is missing (fill-opacity lost in rendering)"
+    return None
+
+
+def _variant_pair(set_dir: Path, variant: Path, base_id: str, grid: int, spec: dict) -> tuple[list[str], list[str]]:
+    """A filled variant needs its base master, and must occupy the same box as it."""
+    base = set_dir / "masters" / f"{base_id}.svg"
+    if not base.is_file():
+        return [f"variant of {base_id} but masters/{base_id}.svg does not exist"], []
+    try:
+        return consistency.split(consistency.variant_findings(base.read_bytes(), variant.read_bytes(), grid, spec))
+    except ToolError as exc:
+        if exc.code != EXIT_DEPENDENCY:
+            raise
+        return [], [f"variant bounds not checked: {exc.message}"]
 
 
 def _record_state(set_dir: Path, set_id: str, results: dict) -> None:
@@ -161,6 +239,10 @@ def _png_problems(path: Path, item: dict, spec: dict) -> list[str]:
             # strong coverage there means the drawing is cut off by the canvas
             if any(e.getextrema()[1] >= 128 for e in edges):
                 errs.append("content touches the canvas edge (clipping)")
+            if style_spec.style_mode(spec) == "duotone":
+                problem = _secondary_layer_problem({**item, "_png": path}, size)
+                if problem:
+                    errs.append(problem)
             want = tuple(int(item["color"].lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
             # Edge pixels are partly transparent and their color is rounded when alpha is un-premultiplied,
             # so judge the alpha-weighted mean color of all content against the palette token.

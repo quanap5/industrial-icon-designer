@@ -84,11 +84,36 @@ def style_hash(spec: dict) -> str:
 
 
 GEOMETRY_KEYS = ["grid", "stroke_width", "linecap", "linejoin", "padding", "small_variant_sizes_px"]
+STYLE_MODES = ("outline", "filled", "duotone")
+DEFAULT_STYLE_MODE = "outline"
+DEFAULT_DUOTONE_OPACITY = 0.3
+
+
+def style_mode(spec: dict) -> str:
+    """The drawing mode of the set; a spec written before modes existed is an outline set."""
+    return spec.get("style_mode", DEFAULT_STYLE_MODE)
+
+
+def duotone_opacity(spec: dict) -> float:
+    return spec.get("duotone_secondary_opacity", DEFAULT_DUOTONE_OPACITY)
+
+
+def mode_parameters(spec: dict) -> dict:
+    """Mode fields that differ from the defaults. Empty for an outline set, so its hashes match the ones
+    computed before modes existed."""
+    out = {}
+    if style_mode(spec) != DEFAULT_STYLE_MODE:
+        out["style_mode"] = style_mode(spec)
+    if style_mode(spec) == "duotone":
+        out["duotone_secondary_opacity"] = duotone_opacity(spec)
+    return out
 
 
 def geometry_hash(spec: dict) -> str:
-    """Hash of everything that changes drawn geometry; palette-only edits leave it unchanged."""
-    return canonical_hash({k: spec[k] for k in GEOMETRY_KEYS})
+    """Hash of everything that changes drawn geometry; palette-only edits leave it unchanged. The drawing form
+    and the duotone opacity count as geometry: changing them changes what is drawn, so earlier approvals no
+    longer describe the icons."""
+    return canonical_hash({**{k: spec[k] for k in GEOMETRY_KEYS}, **mode_parameters(spec)})
 
 
 def palette_hash(spec: dict) -> str:
@@ -103,6 +128,7 @@ def fmt(value) -> str:
 
 def expected_rows(spec: dict) -> dict[str, str]:
     rows = {k: fmt(spec[k]) for k in SCALARS}
+    rows.update({k: fmt(v) for k, v in mode_parameters(spec).items()})
     for theme, tokens in sorted(spec["themes"].items()):
         for token in ("background", "normal", "disabled"):
             rows[f"themes.{theme}.{token}"] = tokens[token].upper()
@@ -135,6 +161,8 @@ def cmd_init(args, set_dir: Path) -> dict:
         raise ToolError(EXIT_INPUT, "style-spec.json already exists; edit it instead of re-initialising", str(p))
     spec = dict(DEFAULT_SPEC)
     spec["set_id"] = args.set_id or set_dir.resolve().name
+    if args.style_mode:  # an explicit mode, even outline, opts the set into strict consistency errors
+        spec["style_mode"] = args.style_mode
     validate_schema(spec, "style-spec", str(p))
     write_json(p, spec)
     return {"style_spec": str(p), "palette_status": spec["palette_status"]}
@@ -174,8 +202,10 @@ def cmd_check(args, set_dir: Path) -> dict:
         if key not in expected:
             problems.append({"parameter": key, "json": None, "markdown": actual[key]})
     text = p.read_text(encoding="utf-8")
+    import consistency  # deferred: consistency reads this module's mode helpers
     return {"consistent": not problems, "contradictions": problems,
-            "unfilled_sections": [ph for ph in PLACEHOLDERS if ph in text]}
+            "unfilled_sections": [ph for ph in PLACEHOLDERS if ph in text],
+            "consistency": consistency.spec_findings(spec)}
 
 
 def cmd_finalize(args, set_dir: Path) -> dict:
@@ -183,6 +213,10 @@ def cmd_finalize(args, set_dir: Path) -> dict:
     if not result["consistent"]:
         raise ToolError(EXIT_VALIDATION, "icon-style.md contradicts style-spec.json: "
                         + ", ".join(p["parameter"] for p in result["contradictions"]))
+    blocking = [f for f in result["consistency"] if f["severity"] == "error"]
+    if blocking:
+        raise ToolError(EXIT_VALIDATION, "style spec breaks consistency rules: " + " | ".join(
+            f"[{f['rule']}] {f['message']} (suggested: {f['suggested']})" for f in blocking))
     if result["unfilled_sections"]:
         raise ToolError(EXIT_VALIDATION, "icon-style.md still contains template text; write the rationale, shared "
                         "geometry, exceptions and examples first: " + " | ".join(result["unfilled_sections"]))
@@ -200,6 +234,7 @@ def main() -> int:
         p.add_argument("--json", action="store_true")
         if name == "init":
             p.add_argument("--set-id")
+            p.add_argument("--style-mode", choices=STYLE_MODES)
     args = ap.parse_args()
     set_dir = Path(args.set_dir)
     if args.cmd == "hash":

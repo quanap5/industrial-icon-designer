@@ -109,6 +109,35 @@
         "provisional_requires_review",
         "approved"
       ]
+    },
+    "style_mode": {
+      "enum": [
+        "outline",
+        "filled",
+        "duotone"
+      ],
+      "default": "outline"
+    },
+    "duotone_secondary_opacity": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 1
+    },
+    "consistency_overrides": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {}
+        }
+      }
     }
   },
   "required": [
