@@ -14,6 +14,7 @@ from set data (groups, sizes) are numeric, never raw text.
 """
 from __future__ import annotations
 
+import style_spec
 from common import escape_html as esc
 
 SIM_BANNER = "SIMULATION: standalone mock-up, not the actual application. It does not count as application validation."
@@ -126,6 +127,18 @@ def theme_controls(themes: list[str], prefix: str) -> str:
     return radios(prefix, "Theme", opts, f"{prefix}-all")
 
 
+def form_controls(forms: list[str]) -> str:
+    """Filter by drawing form; only worth showing when the scope mixes more than one."""
+    if len(forms) < 2:
+        return ""
+    return radios("fm", "Form", [("fm-all", "All")] + [(f"fm-{f}", esc(f)) for f in forms], "fm-all")
+
+
+def form_rules(forms: list[str]) -> str:
+    return "".join(f'body:has(#fm-{f}:checked) .icon:not([data-form="{f}"]){{display:none}}'
+                   for f in forms) if len(forms) > 1 else ""
+
+
 def group_nav(groups: list[tuple[str, int]], total: int, anchors: bool = True) -> str:
     opts = [("g-all", f"<span>All groups</span><span>{total}</span>")]
     opts += [(f"g-{n}", f"<span>{esc(name)}</span><span>{count}</span>") for n, (name, count) in enumerate(groups)]
@@ -175,27 +188,30 @@ def index_page(spec: dict, entries: list[dict], groups: list[tuple[str, int]], s
         variants = "".join(_variant(e, theme, tokens, state, sizes, src)
                            for theme, tokens in sorted(spec["themes"].items()) for state in spec["states"])
         cls, label = BADGE[e["badge"]]
+        pair = f' | variant of <a href="#{esc(e["variant_of"])}">{esc(e["variant_of"])}</a>' if e["variant_of"] else ""
         cards.append(
-            f'<section class="card icon" id="{esc(e["id"])}" data-g="{e["g"]}"><h3>{esc(e["id"])}'
-            f'<span class="badge {cls}">{label}</span></h3>'
-            f'<div class="meta">{esc(e["meaning"])} | {esc(e["group"])} | {esc(e["role"])}</div>'
+            f'<section class="card icon" id="{esc(e["id"])}" data-g="{e["g"]}" data-form="{esc(e["form"])}">'
+            f'<h3>{esc(e["id"])}<span class="badge {cls}">{label}</span></h3>'
+            f'<div class="meta">{esc(e["meaning"])} | {esc(e["group"])} | {esc(e["role"])} | {esc(e["form"])}{pair}</div>'
             f'<div class="variants">{variants}</div></section>')
     themes = sorted(spec["themes"])
+    forms = sorted({e["form"] for e in entries})
     controls = (
         theme_controls(themes, "th")
         + radios("st", "State", [("st-all", "Both"), ("st-normal", "Normal"), ("st-disabled", "Disabled")], "st-all")
         + radios("sz", "Size", [("sz-all", "All")] + [(f"sz-{s}", f"{s}px") for s in sizes], "sz-all")
+        + form_controls(forms)
         + radios("md", "Show", [("md-both", "Before + After"), ("md-before", "Before only"), ("md-after", "After only")], "md-both")
         + '<fieldset class="ctl"><legend>Enlarged</legend><span class="opt"><input type="checkbox" id="zm" checked>'
           '<label for="zm">Supplement</label></span></fieldset>')
     head = (f"<h1>Icon preview: {esc(spec['set_id'])}</h1>"
-            f'<div class="meta">Style {esc(spec["style_version"])} | grid {spec["grid"]} | stroke {spec["stroke_width"]} | '
+            f'<div class="meta">Style {esc(spec["style_version"])} | mode {esc(style_spec.style_mode(spec))} | grid {spec["grid"]} | stroke {spec["stroke_width"]} | '
             f'{len(entries)} icons in scope ({esc(scope)})</div>{palette_note}'
             f'<div class="banner">Views are shown at actual size; enlarged views are a supplement only. Before is the reference as supplied, '
             f'After is the redrawn master. Contexts: <span class="pagelinks"><a href="contexts/desktop.html">Desktop simulation</a>'
             f'<a href="contexts/web.html">Web inline SVG simulation</a><a href="contexts/web-img.html">Web img simulation</a></span></div>'
             f"<h2>Contrast (token level)</h2>{contrast_html}")
-    extra = sized_rules(sizes) + group_rules(len(groups))
+    extra = sized_rules(sizes) + group_rules(len(groups)) + form_rules(forms)
     body = (group_nav_wrap(controls) + f'<div class="wrap">{head}</div>'
             f'<div class="shell">{group_nav(groups, len(entries))}<div class="cards"><h2>Icons</h2>{"".join(cards)}</div></div>'
             f'<p class="foot">Filters use CSS :has() and need a current browser; without it every icon and variant is shown.</p>')

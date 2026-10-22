@@ -78,8 +78,8 @@ def inline_svg(svg_text: str) -> str:
 def scope_icons(set_dir: Path, scope: str, inv: dict) -> list[dict]:
     if scope == "pilot" and (set_dir / "brief.json").exists():
         ids = set(load_json(set_dir / "brief.json").get("sample_ids") or [])
-        if ids:
-            return [i for i in inv["icons"] if i["id"] in ids]
+        if ids:  # a filled variant is reviewed beside its base, so it follows the base into the scope
+            return [i for i in inv["icons"] if i["id"] in ids or i.get("variant_of") in ids]
     return list(inv["icons"])
 
 
@@ -168,7 +168,9 @@ def build(set_dir: Path, scope: str, groups: list[str] | None = None) -> dict:
         have_master = (set_dir / "masters" / f"{iid}.svg").is_file()
         badge = ("approved" if iid in approved_ids else "draft") if have_master else "missing"
         entries.append({"id": iid, "meaning": icon["meaning"], "group": icon["functional_group"], "role": icon["semantic_role"],
-                        "g": group_names.index(icon["functional_group"]), "badge": badge, "have_master": have_master})
+                        "g": group_names.index(icon["functional_group"]), "badge": badge, "have_master": have_master,
+                        "form": "filled" if icon.get("variant_of") else style_spec.style_mode(spec),
+                        "variant_of": icon.get("variant_of", "")})
         for size in sizes:
             ref_png = prev / "renders" / "reference" / str(size) / f"{iid}.png"
             if not ref_png.exists():
