@@ -6,11 +6,19 @@
   },
   "plugins": [
     {
-      "name": "industrial-icon-designer",
+      "name": "qk",
       "source": ".",
-      "description": "Redesign industrial and SCADA UI icon sets into one consistent system and export Desktop PNG and Web SVG assets.",
+      "description": "Skills for redesigning industrial and SCADA UI icon sets (industrial-icon-designer) and viewing workflow progress (logs).",
       "category": "design",
-      "tags": ["icons", "svg", "scada", "design-system"]
+      "tags": [
+        "icons",
+        "svg",
+        "scada",
+        "design-system"
+      ]
     }
-  ]
+  ],
+  "renames": {
+    "industrial-icon-designer": "qk"
+  }
 }

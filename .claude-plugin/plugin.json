@@ -1,13 +1,21 @@
 {
-  "name": "industrial-icon-designer",
-  "displayName": "Industrial Icon Designer",
-  "version": "0.3.0",
-  "description": "Redesign industrial and SCADA UI icon sets from PNG or SVG references; keep consistent SVG masters and export Light/Dark Desktop PNG and Web SVG assets.",
+  "name": "qk",
+  "displayName": "QK",
+  "version": "0.3.1",
+  "description": "QK skills for Claude Code: redesign industrial and SCADA UI icon sets (industrial-icon-designer) and show where a work set is in the workflow (logs).",
   "author": {
     "name": "quanap5"
   },
   "homepage": "https://github.com/quanap5/industrial-icon-designer",
   "repository": "https://github.com/quanap5/industrial-icon-designer",
   "license": "MIT",
-  "keywords": ["icons", "svg", "scada", "industrial", "design-system", "claude-code-skill"]
+  "keywords": [
+    "icons",
+    "svg",
+    "scada",
+    "industrial",
+    "design-system",
+    "claude-code-skill"
+  ],
+  "icon": "./logos/export/logo-512.png"
 }

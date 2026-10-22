@@ -29,8 +29,10 @@ def tracked_files() -> list[str]:
 
 def test_manifests_are_consistent_with_each_other():
     plugin, market = load(PLUGIN), load(MARKET)
-    assert plugin["name"] == "industrial-icon-designer" and plugin["license"] == "MIT"
+    assert plugin["name"] == "qk" and plugin["license"] == "MIT"
     entry = next(p for p in market["plugins"] if p["name"] == plugin["name"])
+    assert market["renames"] == {"industrial-icon-designer": "qk"}, "existing installs of the old name migrate"
+    assert "industrial-icon-designer" not in [p["name"] for p in market["plugins"]]
     assert entry["name"] == plugin["name"], "entry name and manifest name must match"
     assert entry["source"] == ".", "the repository root is the plugin"
     assert "version" not in entry, "version is set once, in plugin.json"
@@ -70,8 +72,8 @@ def test_skill_documents_both_paths_and_the_explicit_setup():
 def test_readme_gives_the_install_lines_and_the_private_repo_requirements():
     text = (ROOT / "README.md").read_text()
     for needle in ("/plugin marketplace add quanap5/industrial-icon-designer",
-                   "/plugin install industrial-icon-designer@quanap5-plugins",
-                   "--marketplace quanap5/industrial-icon-designer", "read access", "gh auth setup-git",
+                   "/plugin install qk@quanap5-plugins",
+                   "--marketplace quanap5/industrial-icon-designer", "/qk:industrial-icon-designer", "/qk:logs", "read access", "gh auth setup-git",
                    "CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1"):
         assert needle in text, needle
 

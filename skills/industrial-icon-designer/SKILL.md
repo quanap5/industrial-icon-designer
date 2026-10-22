@@ -29,7 +29,7 @@ uv pip install --python "${CLAUDE_PLUGIN_DATA}/env/bin/python" -r "${CLAUDE_PLUG
 cargo install resvg        # or a release binary from github.com/linebender/resvg
 ```
 
-As a plugin the skill is invoked as `/industrial-icon-designer:industrial-icon-designer`; the subcommands below are arguments to it.
+As a plugin the skill is invoked as `/qk:industrial-icon-designer`; the subcommands below are arguments to it.
 
 ## Ground rules
 

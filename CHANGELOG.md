@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 (2026-10-22)
+
+- The plugin is renamed from `industrial-icon-designer` to `qk`: the skills are `/qk:industrial-icon-designer` and `/qk:logs`, and the install id is `qk@quanap5-plugins`. The marketplace lists the old name under `renames`, so existing installs migrate. The skill names themselves are unchanged.
+
 ## 0.3.0 (2026-10-22)
 
 - New skill `logs` (`/<plugin>:logs`) and script `progress.py`: a read-only view of where a work set is in the workflow. It prints a vertical step timeline with colored markers (green done, cyan in progress, yellow waiting for you, red stopped, gray not yet), the gates between steps, a `YOU ARE HERE` marker and the next action; it also has a one-line form for Claude Code's status line and a JSON form. Everything is derived from the files the workflow already writes, nothing is written, and only the standard library is needed.

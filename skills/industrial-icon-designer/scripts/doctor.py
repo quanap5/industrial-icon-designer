@@ -129,7 +129,7 @@ def check_discovery(project_root: Path) -> dict:
             return check("skill-discovery", "ok", f"installed at {installed}")
     if (PACKAGE_DIR.parent.parent / ".claude-plugin" / "plugin.json").is_file():
         return check("skill-discovery", "ok", "package is part of a Claude Code plugin "
-                     "(/plugin install industrial-icon-designer --marketplace quanap5/industrial-icon-designer)")
+                     "(/plugin install qk --marketplace quanap5/industrial-icon-designer)")
     return check("skill-discovery", "warn", "package valid but not installed under .claude/skills; "
                  "link or copy skills/industrial-icon-designer to enable discovery")
 

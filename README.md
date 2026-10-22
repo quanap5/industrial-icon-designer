@@ -52,7 +52,7 @@ defusedxml, pytest, and three pinned upstream skills from [shadcn-labs/skills](h
 
 ## See where you are
 
-Ask for the `logs` skill (as a plugin: `/<plugin>:logs`) or run the script. It shows the eight steps as a vertical timeline, marks the step you are on (running, waiting for you, or stopped with the reason), shows the gate between steps and the next action, and never changes anything:
+Ask for the `logs` skill (as a plugin: `/qk:logs`) or run the script. It shows the eight steps as a vertical timeline, marks the step you are on (running, waiting for you, or stopped with the reason), shows the gate between steps and the next action, and never changes anything:
 
 ```bash
 python3 skills/industrial-icon-designer/scripts/progress.py                 # newest set under ./icon-work
@@ -74,18 +74,18 @@ This repository is both a Claude Code marketplace and a plugin, so other people 
 
 ```text
 /plugin marketplace add quanap5/industrial-icon-designer
-/plugin install industrial-icon-designer@quanap5-plugins
+/plugin install qk@quanap5-plugins
 ```
 
-On Claude Code 2.1.275 or later one step also works: `/plugin install industrial-icon-designer --marketplace quanap5/industrial-icon-designer`.
-The skill then runs as `/industrial-icon-designer:industrial-icon-designer`.
+On Claude Code 2.1.275 or later one step also works: `/plugin install qk --marketplace quanap5/industrial-icon-designer`.
+The plugin is called `qk` and holds two skills: `/qk:industrial-icon-designer` (the workflow) and `/qk:logs` (where am I). The plugin was called `industrial-icon-designer` before 0.3.1; the marketplace renames it, so an existing install moves to `qk` (run `/plugin install qk@quanap5-plugins` once if Claude Code reports it is not cached). The one-time environment setup moves with the plugin name; repeat it if `doctor.py` reports missing packages.
 
 **The repository is private**, so each person needs two things and nothing else:
 
 1. read access to the repository (invite them as a collaborator), and
 2. one working git credential on their machine: an SSH key that does not prompt for a passphrase, **or** `gh auth login` followed by `gh auth setup-git`. On a machine without a GitHub SSH key also set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1`.
 
-Auto-update is off by default; people get new releases with `/plugin marketplace update quanap5-plugins`, and only when `version` in `.claude-plugin/plugin.json` changes. Remove it with `claude plugin uninstall industrial-icon-designer@quanap5-plugins`.
+Auto-update is off by default; people get new releases with `/plugin marketplace update quanap5-plugins`, and only when `version` in `.claude-plugin/plugin.json` changes. Remove it with `claude plugin uninstall qk@quanap5-plugins`.
 
 The plugin does not install Python or the renderer. After installing, do the one-time environment setup that `skills/industrial-icon-designer/SKILL.md` describes (a Python 3.11 environment under the plugin data directory, plus `resvg`), then run `doctor.py`. A plugin runs code with your user privileges, so read it before you install it.
 
