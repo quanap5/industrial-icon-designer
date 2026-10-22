@@ -1,0 +1,56 @@
+{
+  "alarm-list-clear": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "minus badge for clear is readable; bell stays clear at 16 px"
+  },
+  "device-connected": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "check badge reads as done; plug is small but clear"
+  },
+  "network-add": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "plus badge is clear; the lower-right node sits close to it at 16 px"
+  },
+  "pump-add": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the 16 px variant drops the triangle and base; ring, outlet and plus badge stay clear"
+  },
+  "save-done": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the 16 px variant drops the label; floppy body, shutter and check badge stay clear"
+  },
+  "valve-remove": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the 16 px variant drops the stem and handle; the bow-tie and minus badge stay clear"
+  }
+}

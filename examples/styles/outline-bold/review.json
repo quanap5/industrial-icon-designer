@@ -1,0 +1,92 @@
+{
+  "add": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "stroke 2 plus; heavy but clear"
+  },
+  "alarm-list": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "bell and clapper stay open at stroke 2"
+  },
+  "device-connect": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "prongs and cord stay distinct"
+  },
+  "network": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the node rings nearly close at stroke 2 and 16 px"
+  },
+  "open-folder": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the flap gap narrows at 16 px"
+  },
+  "pump": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the inner triangle crowds the ring at stroke 2"
+  },
+  "save": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the inner shutter gaps narrow at 16 px"
+  },
+  "settings": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "rays and ring crowd at 16 px; an explicit 16 px variant would help"
+  },
+  "trend-chart": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "axes and line keep their separation"
+  },
+  "valve": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the bow-tie stays readable; the handle is close to the stem at 16 px"
+  }
+}

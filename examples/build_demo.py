@@ -53,36 +53,62 @@ def run(script: str, *args, check: bool = True) -> subprocess.CompletedProcess:
     return proc
 
 
-def build(out: Path, review: Path | None, stop_after: str | None = None) -> Path:
+def build_set(out: Path, review: Path | None, stop_after: str | None = None, *, set_id: str = SET_ID,
+              direction: str = DIRECTION, prose_by_placeholder: dict | None = None, masters: Path | None = None,
+              style_args: tuple = (), spec_patch: dict | None = None, small_variants: dict | None = None,
+              variants: tuple = (), variant_masters: Path | None = None, readme: str | None = None,
+              review_note: str = "agent review of synthetic fixtures; not human approval",
+              references: Path | None = None, metadata: Path | None = None) -> Path:
+    """Run the real pipeline on the synthetic references and the given masters.
+
+    `style_args` go to `style_spec.py init` (for example `--style-mode filled`), `spec_patch` is merged into
+    style-spec.json before the summary is generated, `small_variants` maps an icon id to its 16 px SVG text, and
+    `variants` lists the icons that get a filled variant whose master is read from `variant_masters`. `references` and
+    `metadata` replace the shared synthetic references and their metadata for an example with its own icons.
+    """
     refs = out / "references"
-    set_dir = out / "icon-work" / SET_ID
+    set_dir = out / "icon-work" / set_id
     if out.exists():
         shutil.rmtree(out)
-    shutil.copytree(FIXTURES / "references", refs)
-    (refs / "mystery-glyph.png").unlink()  # the ambiguous glyph is a test case, not part of the demo set
-    shutil.copy(FIXTURES / "metadata.json", refs / "metadata.json")
+    shutil.copytree(references or FIXTURES / "references", refs)
+    (refs / "mystery-glyph.png").unlink(missing_ok=True)  # the ambiguous glyph is a test case, not part of a demo set
+    shutil.copy(metadata or FIXTURES / "metadata.json", refs / "metadata.json")
 
-    run("inventory_icons.py", "--input", refs, "--set", set_dir, "--set-id", SET_ID)
+    run("inventory_icons.py", "--input", refs, "--set", set_dir, "--set-id", set_id)
     run("analysis.py", "brief", "--set", set_dir, "--mode", "redraw")
     run("analysis.py", "sample", "--set", set_dir)
     run("analysis.py", "audit", "--set", set_dir, "--project-root", ROOT)
     report = set_dir / "reports" / "reference-analysis.md"
     marker = "<!-- direction:pending -->\nReplace this marker with the proposed direction and its rationale."
-    report.write_text(report.read_text().replace(marker, DIRECTION))
+    report.write_text(report.read_text().replace(marker, direction))
     run("analysis.py", "finalize", "--set", set_dir)
 
-    run("style_spec.py", "init", "--set", set_dir, "--set-id", SET_ID)
+    run("style_spec.py", "init", "--set", set_dir, "--set-id", set_id, *style_args)
+    if spec_patch:
+        spec_path = set_dir / "style-spec.json"
+        spec = json.loads(spec_path.read_text())
+        for key, value in spec_patch.items():
+            spec[key] = {**spec[key], **value} if isinstance(value, dict) and isinstance(spec.get(key), dict) else value
+        spec_path.write_text(json.dumps(spec, indent=2, sort_keys=True) + "\n")
     run("style_spec.py", "generate", "--set", set_dir)
     style = set_dir / "icon-style.md"
     prose = style.read_text()
-    for placeholder, text in STYLE_PROSE.items():
+    for placeholder, text in (prose_by_placeholder or STYLE_PROSE).items():
         prose = prose.replace(placeholder, text)
     style.write_text(prose)
     run("style_spec.py", "finalize", "--set", set_dir)
 
-    shutil.copytree(FIXTURES / "masters", set_dir / "masters")
-    (set_dir / "variants" / "small").mkdir(parents=True)
-    (set_dir / "variants" / "small" / "settings.svg").write_text(SMALL_SETTINGS)
+    shutil.copytree(masters or FIXTURES / "masters", set_dir / "masters")
+    if small_variants is None and masters is None:
+        small_variants = {"settings": SMALL_SETTINGS}
+    for icon_id, text in (small_variants or {}).items():
+        (set_dir / "variants" / "small").mkdir(parents=True, exist_ok=True)
+        (set_dir / "variants" / "small" / f"{icon_id}.svg").write_text(text)
+    variant_ids = []
+    for base in variants:
+        run("variants.py", "add", "--set", set_dir, "--base", base)
+        shutil.copy(variant_masters / f"{base}.svg", set_dir / "masters" / f"{base}-filled.svg")
+        variant_ids.append(f"{base}-filled")
     run("render_preview.py", "--set", set_dir)
     if stop_after == "preview":
         return set_dir
@@ -96,8 +122,11 @@ def build(out: Path, review: Path | None, stop_after: str | None = None) -> Path
         raise SystemExit(f"review file has no scores for: {', '.join(missing)}")
     shutil.copy(review, set_dir / "reports" / "pilot-review.json")
     run("approvals.py", "record", "--set", set_dir, "--type", "pilot", "--reviewer", "agent",
-        "--unattended-authorized", "--scores-file", review,
-        "--note", "agent review of synthetic fixtures; not human approval")
+        "--unattended-authorized", "--scores-file", review, "--note", review_note)
+    if variant_ids:
+        run("approvals.py", "record", "--set", set_dir, "--type", "batch", "--reviewer", "agent",
+            "--unattended-authorized", "--ids", ",".join(variant_ids),
+            "--note", "agent review of the filled variants beside their base icons; not human approval")
     run("validate_icons.py", "--set", set_dir, "--phase", "source", "--project-root", ROOT)
     run("export_assets.py", "--set", set_dir)
     run("validate_icons.py", "--set", set_dir, "--phase", "exported")
@@ -105,8 +134,12 @@ def build(out: Path, review: Path | None, stop_after: str | None = None) -> Path
     run("app_validation.py", "checklist", "--set", set_dir)
     run("app_validation.py", "evaluate", "--set", set_dir)
     run("manifest.py", "status", "--set", set_dir)
-    (out / "README.md").write_text(DEMO_README)
+    (out / "README.md").write_text(readme or DEMO_README)
     return set_dir
+
+
+def build(out: Path, review: Path | None, stop_after: str | None = None) -> Path:
+    return build_set(out, review, stop_after)
 
 
 DEMO_README = """# SCADA demo set (synthetic)

@@ -1,0 +1,92 @@
+{
+  "add": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "translucent disc behind the plus; the disc is the widest element of the set"
+  },
+  "alarm-list": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "the bell fill is faint at 16 px; the outline carries the shape"
+  },
+  "device-connect": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "fill on the plug body separates it from the prongs"
+  },
+  "network": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "node fills are small at 16 px; the links carry the shape"
+  },
+  "open-folder": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "fill on the front flap reads as a folded flap"
+  },
+  "pump": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "same busy interior as the outline version; the body fill separates it"
+  },
+  "save": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "body fill with open shutter and label outlines"
+  },
+  "settings": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "the centre disc fill is barely visible at 16 px"
+  },
+  "trend-chart": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "the area under the line reads clearly"
+  },
+  "valve": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 4,
+    "semantic_defect": false,
+    "note": "light triangle fill; the shape is still clear"
+  }
+}

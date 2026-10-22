@@ -1,0 +1,92 @@
+{
+  "add": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "solid plus; the heaviest arms in the set but clear at 16 px"
+  },
+  "alarm-list": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the clapper reads as a dot at 16 px; the bell shape carries the meaning"
+  },
+  "device-connect": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "prongs are 2 units wide and hold at 16 px"
+  },
+  "network": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the links stay 1.5 wide and look thin beside the solid nodes at 16 px; acceptable"
+  },
+  "open-folder": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "tab and flap stay apart by a 1.5 unit gap"
+  },
+  "pump": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the triangle knock-out is small at 16 px; outlet and base keep the equipment reading"
+  },
+  "save": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "shutter and label holes stay open at 16 px"
+  },
+  "settings": {
+    "meaning": 5,
+    "clarity_16": 5,
+    "balance": 5,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "all eight teeth stay distinct at 16 px"
+  },
+  "trend-chart": {
+    "meaning": 4,
+    "clarity_16": 5,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "an area under the line replaces the open polyline; the trend still reads"
+  },
+  "valve": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "two triangles and a handle; small at 16 px but the bow-tie shape holds"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "icons": [
+    {
+      "id": "pump-add",
+      "meaning": "Add a pump to the plant",
+      "functional_group": "devices-connectivity",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ],
+      "notes": "synthetic fixture"
+    },
+    {
+      "id": "valve-remove",
+      "meaning": "Remove a valve from the plant",
+      "functional_group": "devices-connectivity",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ],
+      "notes": "synthetic fixture"
+    },
+    {
+      "id": "network-add",
+      "meaning": "Add a node to the network",
+      "functional_group": "devices-connectivity",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ],
+      "notes": "synthetic fixture"
+    },
+    {
+      "id": "device-connected",
+      "meaning": "Device is connected",
+      "functional_group": "devices-connectivity",
+      "semantic_role": "state",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ],
+      "notes": "synthetic fixture"
+    },
+    {
+      "id": "save-done",
+      "meaning": "Project is saved",
+      "functional_group": "file-edit",
+      "semantic_role": "state",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ],
+      "notes": "synthetic fixture"
+    },
+    {
+      "id": "alarm-list-clear",
+      "meaning": "Clear the alarm list",
+      "functional_group": "alarms-events",
+      "semantic_role": "action",
+      "sizes_px": [
+        16,
+        20,
+        24,
+        32
+      ],
+      "usage_locations": [
+        "toolbar",
+        "menu"
+      ],
+      "notes": "synthetic fixture"
+    }
+  ]
+}

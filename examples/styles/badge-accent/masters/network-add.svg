@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="currentColor">
+  <path d="M8.6 4.6 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 0 0 -3.2 0zM3 15.8 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 0 0 -3.2 0zM14.2 15.8 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 0 0 -3.2 0zM10.2 6.2 v4 M10.2 10.2 l-4.8 4.4 M10.2 10.2 l4.8 4.4"/>
+  <path fill="var(--icon-accent, currentColor)" stroke="none" fill-rule="evenodd" d="M14 10.25a4 4 0 1 0 8 0a4 4 0 0 0-8 0zM17.25 7.75h1.5v1.75h1.75v1.5h-1.75v1.75h-1.5v-1.75h-1.75v-1.5h1.75z"/>
+</svg>

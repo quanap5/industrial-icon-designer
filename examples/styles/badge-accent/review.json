@@ -1,0 +1,56 @@
+{
+  "pump-add": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the violet badge sits on the right edge of the ring and covers the outlet side; the 16 px variant keeps ring, outlet and plus"
+  },
+  "valve-remove": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the badge covers the right triangle's tip; the 16 px variant keeps the bow-tie and the minus"
+  },
+  "network-add": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "all three nodes stay visible; the badge covers part of the right branch"
+  },
+  "device-connected": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the badge overlaps the right prong and body; the check is small at 16 px"
+  },
+  "save-done": {
+    "meaning": 5,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the badge overlaps the right side of the floppy; the check is small at 16 px"
+  },
+  "alarm-list-clear": {
+    "meaning": 4,
+    "clarity_16": 4,
+    "balance": 4,
+    "consistency": 5,
+    "contrast": 5,
+    "semantic_defect": false,
+    "note": "the badge covers the right side of the bell; the minus stays readable in the 16 px variant"
+  }
+}
